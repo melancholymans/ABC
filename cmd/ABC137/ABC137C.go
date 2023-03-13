@@ -8,6 +8,9 @@ import (
 )
 
 func main() {
+	m := map[byte]int{
+		97: 2, 98: 5, 99: 7, 100: 11, 101: 13, 102: 17, 103: 19, 104: 23, 105: 29, 106: 31, 107: 37, 108: 41, 109: 43, 110: 47, 111: 53, 112: 59, 113: 61, 114: 67, 115: 71, 116: 73, 117: 79, 118: 83, 119: 89, 120: 97, 121: 101, 122: 103,
+	}
 	sc := bufio.NewScanner(os.Stdin)
 	writer := bufio.NewWriter(os.Stdout)
 	defer writer.Flush()
@@ -19,7 +22,7 @@ func main() {
 		sc.Scan()
 		s := []byte(sc.Text())
 		for j := 0; j < 10; j++ {
-			total += int(s[j])
+			total += m[s[j]]
 		}
 		ad[i] = total
 	}
@@ -33,14 +36,3 @@ func main() {
 	}
 	fmt.Fprintln(writer, count)
 }
-
-/*
-func cmp(a, b []string) bool {
-	for i := 0; i < 10; i++ {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
-}
-*/
