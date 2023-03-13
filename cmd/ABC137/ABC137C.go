@@ -4,28 +4,29 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
 	"strconv"
-	"strings"
 )
 
 func main() {
 	sc := bufio.NewScanner(os.Stdin)
 	writer := bufio.NewWriter(os.Stdout)
 	defer writer.Flush()
-	ad := make([][]string, 100000)
+	ad := make([]int, 100000)
 	sc.Scan()
 	n, _ := strconv.Atoi(sc.Text())
 	for i := 0; i < n; i++ {
+		total := 0
 		sc.Scan()
-		s := strings.Split(sc.Text(), "")
-		sort.Strings(s)
-		ad[i] = s
+		s := []byte(sc.Text())
+		for j := 0; j < 10; j++ {
+			total += int(s[j])
+		}
+		ad[i] = total
 	}
 	var count int
 	for i := 0; i < n-1; i++ {
 		for j := i + 1; j < n; j++ {
-			if cmp(ad[i], ad[j]) {
+			if ad[i] == ad[j] {
 				count += 1
 			}
 		}
@@ -33,6 +34,7 @@ func main() {
 	fmt.Fprintln(writer, count)
 }
 
+/*
 func cmp(a, b []string) bool {
 	for i := 0; i < 10; i++ {
 		if a[i] != b[i] {
@@ -41,3 +43,4 @@ func cmp(a, b []string) bool {
 	}
 	return true
 }
+*/
