@@ -15,23 +15,23 @@ func main() {
 	in := sc.Text()
 	i, j := 0, 0
 	n := len(in)
-	var result []byte
+	var result []string
 	for {
-		o := in[j]
+		o := strconv.Itoa(int(in[j]))
 		if i == j {
 			result = append(result, o)
 		}
 		j += 1
 		if j <= n {
 			l := strconv.Itoa(j - i)
-			result = append(result, byte(l))
+			result = append(result, l)
 			i = j
 		}
 		if in[i] != in[j] {
 			e := strconv.Itoa(j - i)
-			append(result, e)
+			result = append(result, e)
 			i = j
 		}
 	}
-	fmt.Fprintln(writer, in)
+	fmt.Fprintln(writer, result)
 }
