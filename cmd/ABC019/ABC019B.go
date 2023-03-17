@@ -12,24 +12,22 @@ func main() {
 	writer := bufio.NewWriter(os.Stdout)
 	defer writer.Flush()
 	sc.Scan()
-	in := sc.Text()
+	s := sc.Text()
 	i, j := 0, 0
-	n := len(in)
-	var result []string
+	n := len(s)
+	var result string
 	for {
-		o := strconv.Itoa(int(in[j]))
+		c := s[j]
 		if i == j {
-			result = append(result, o)
+			result = result + string(c)
 		}
 		j += 1
-		if j <= n {
-			l := strconv.Itoa(j - i)
-			result = append(result, l)
-			i = j
+		if j >= n {
+			result = result + strconv.Itoa(j-i)
+			break
 		}
-		if in[i] != in[j] {
-			e := strconv.Itoa(j - i)
-			result = append(result, e)
+		if s[i] != s[j] {
+			result = result + strconv.Itoa(j-i)
 			i = j
 		}
 	}
