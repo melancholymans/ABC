@@ -22,18 +22,10 @@ func main() {
 		m, _ := strconv.Atoi(sc.Text())
 		la = append(la, m)
 	}
-	m := make(map[int]bool)
-	uniq := []int{}
-	for _, ele := range la {
-		if !m[ele] {
-			m[ele] = true
-			uniq = append(uniq, ele)
-		}
-	}
 	total := 0
 	min := 1000000
 	count := 0
-	for _, a := range uniq {
+	for _, a := range la {
 		count += 1
 		total += a
 		if a < min {
