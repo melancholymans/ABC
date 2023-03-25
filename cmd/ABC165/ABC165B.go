@@ -13,10 +13,10 @@ func main() {
 	defer writer.Flush()
 	sc.Scan()
 	x, _ := strconv.Atoi(sc.Text())
-	m := float64(100)
+	m := 100
 	for i := 1; ; i++ {
-		m = m + float64(int(m*0.01))
-		if x <= int(m) {
+		m = m + (m / 100)
+		if x <= m {
 			fmt.Fprintln(writer, i)
 			break
 		}
