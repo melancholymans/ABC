@@ -1,0 +1,21 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	sc := bufio.NewScanner(os.Stdin)
+	writer := bufio.NewWriter(os.Stdout)
+	defer writer.Flush()
+	sc.Scan()
+	n, _ := strconv.Atoi(sc.Text())
+	if n%3 == 0 {
+		fmt.Fprintln(writer, "YES")
+	} else {
+		fmt.Fprintln(writer, "NO")
+	}
+}
