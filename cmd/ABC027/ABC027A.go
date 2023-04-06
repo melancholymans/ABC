@@ -27,5 +27,5 @@ func main() {
 	if l2 == l3 {
 		result = l1
 	}
-	fmt.Fprintln(writer, result)
+	fmt.Fprintln(writer, result /*, l1^l2^l3*/)
 }
