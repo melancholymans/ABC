@@ -27,35 +27,24 @@ func main() {
 			sl[i][j] = float64(a)
 		}
 	}
-	fmt.Println("-----------")
-	var ds float64
-	for j := 0; j < d; j++ {
-		ds += math.Pow(sl[0][j]-sl[1][j], 2)
+	count := 0
+	for i := 0; i < n; i++ {
+		for j := i + 1; j < n; j++ {
+			count += distance(sl, i, j, d)
+		}
+	}
+	fmt.Fprintln(writer, count)
+}
+
+func distance(sl [][]float64, i, j, d int) int {
+	ds := 0.0
+	count := 0
+	for k := 0; k < d; k++ {
+		ds += math.Pow(sl[i][k]-sl[j][k], 2)
 	}
 	sq := math.Sqrt(ds)
 	if math.Floor(sq) == sq {
-		fmt.Println("Yes")
-	} else {
-		fmt.Println("No")
+		count += 1
 	}
-	ds = 0.0
-	for j := 0; j < d; j++ {
-		ds += math.Pow(sl[1][j]-sl[2][j], 2)
-	}
-	sq = math.Sqrt(ds)
-	if math.Floor(sq) == sq {
-		fmt.Println("Yes")
-	} else {
-		fmt.Println("No")
-	}
-	ds = 0.0
-	for j := 0; j < d; j++ {
-		ds += math.Pow(sl[2][j]-sl[0][j], 2)
-	}
-	sq = math.Sqrt(ds)
-	if math.Floor(sq) == sq {
-		fmt.Println("Yes")
-	} else {
-		fmt.Println("No")
-	}
+	return count
 }
