@@ -15,7 +15,6 @@ func main() {
 	m := map[string]int{}
 	sc.Scan()
 	//n, _ := strconv.Atoi(sc.Text())
-
 	sc.Scan()
 	r1 := strings.Split(sc.Text(), " ")
 	a := r1[0]
@@ -24,10 +23,8 @@ func main() {
 	m[b] += 1
 	sc.Scan()
 	k, _ := strconv.Atoi(sc.Text())
-
 	sc.Scan()
 	r2 := strings.Split(sc.Text(), " ")
-
 	for i := 0; i < k; i++ {
 		p := r2[i]
 		m[p] += 1
