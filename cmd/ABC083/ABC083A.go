@@ -24,6 +24,5 @@ func main() {
 		fmt.Fprintln(writer, "Right")
 	} else {
 		fmt.Fprintln(writer, "Balanced")
-
 	}
 }
