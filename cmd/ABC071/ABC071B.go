@@ -18,7 +18,7 @@ func main() {
 	}
 	for i := 0; i < 26; i++ {
 		if m[i] == 0 {
-			fmt.Fprintln(writer, string(i+97))
+			fmt.Fprintln(writer, string(byte(97+i)))
 			return
 		}
 	}
