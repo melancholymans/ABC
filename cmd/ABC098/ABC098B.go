@@ -38,6 +38,7 @@ func main() {
 		if count > maxm {
 			maxm = count
 		}
+		//ループしているため、ここでmapをゼロクリアしている
 		for k, _ := range ma {
 			ma[k] = 0
 		}
