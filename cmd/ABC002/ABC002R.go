@@ -19,27 +19,26 @@ func main() {
 	for i := 0; i < h; i++ {
 		sl[i] = make([]string, w)
 		sc.Scan()
-		r := strings.Split(sc.Text(), "")
+		r := strings.Split(sc.Text(), " ")
 		for j := 0; j < w; j++ {
 			sl[i][j] = r[j]
 		}
 	}
-	ad := turnLeft(h, w, sl)
+	ad := turnRight(h, w, sl)
 	for i := 0; i < w; i++ {
 		for j := 0; j < h; j++ {
-			fmt.Fprint(writer, ad[i][j])
+			fmt.Fprint(writer, ad[i][j], " ")
 		}
 		fmt.Fprint(writer, "\n")
 	}
 }
 
-// 正行列、行数＝列数が前提
-func turnRight(n int, sl [][]string) [][]string {
-	ad := make([][]string, n)
-	for i := 0; i < n; i++ {
-		ad[i] = make([]string, n)
-		for j := 0; j < n; j++ {
-			ad[i][j] = sl[n-1-j][i]
+func turnRight(h, w int, sl [][]string) [][]string {
+	ad := make([][]string, w)
+	for i := 0; i < w; i++ {
+		ad[i] = make([]string, h)
+		for j := 0; j < h; j++ {
+			ad[i][j] = sl[h-1-j][i]
 		}
 	}
 	return ad
@@ -55,3 +54,7 @@ func turnLeft(h, w int, sl [][]string) [][]string {
 	}
 	return ad
 }
+
+/*
+	fmt.Println("i=", i, "j=", j, "sl[j][w-1-i]=", sl[j][w-1-i], "w-1-i=", w-1-i)
+*/
