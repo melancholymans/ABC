@@ -1,5 +1,4 @@
 const file = process.platform === 'linux' ? '/dev/stdin' : './input.txt';
-
 let [[n], input] = require('fs')
   .readFileSync(file, 'utf8')
   .trim()
