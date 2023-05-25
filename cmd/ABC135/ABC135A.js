@@ -6,4 +6,4 @@ function Main(input) {
     var b = parseInt(list[1]);
     console.log("".concat(a, " ").concat(b));
 }
-Main(require("fs").readFileSync("/dev/stdin", "utf8"));
+//Main(require("fs").readFileSync("/dev/stdin","utf8"));
