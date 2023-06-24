@@ -63,15 +63,12 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	a, b, c, d := ni4()
-	if b <= 0 && d <= 0 {
-		fmt.Fprintln(wtr, a*c)
-	} else if a > 0 && c > 0 {
-		fmt.Fprintln(wtr, b*d)
-	} else if b <= 0 && c > 0 {
-		fmt.Fprintln(wtr, c*b)
-	} else if a > 0 && d <= 0 {
-		fmt.Fprintln(wtr, a*d)
-	} else {
-		fmt.Fprintln(wtr, 0)
+	fmt.Fprintln(wtr, Max(Max(Max(a*c, a*d), b*c), b*d))
+}
+
+func Max(a, b int) int {
+	if a > b {
+		return a
 	}
+	return b
 }
