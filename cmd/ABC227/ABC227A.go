@@ -60,7 +60,6 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	n, k, a := ni3()
-	//count := 1
 	h := a
 	for count := 1; count < k; count++ {
 		h += 1
