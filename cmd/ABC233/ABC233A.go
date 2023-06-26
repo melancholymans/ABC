@@ -60,10 +60,9 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	x, y := ni2()
-	z := ((y+(x%10)+9)/10*10 - x/10*10) / 10
-	if z >= 0 {
-		fmt.Fprintln(wtr, z)
-	} else {
+	if x > y {
 		fmt.Fprintln(wtr, 0)
+	} else {
+		fmt.Fprintln(wtr, ((y-x)+9)/10)
 	}
 }
