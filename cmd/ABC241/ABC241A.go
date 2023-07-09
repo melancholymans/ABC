@@ -60,5 +60,9 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	sl := nis(10)
-	fmt.Fprintln(wtr, sl)
+	start := 0
+	for i := 0; i < 2; i++ {
+		start = sl[start]
+	}
+	fmt.Fprintln(wtr, sl[start])
 }
