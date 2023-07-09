@@ -65,7 +65,20 @@ func main() {
 	x1, y1 := ni2()
 	x2, y2 := ni2()
 	x3, y3 := ni2()
-	fmt.Fprintln(wtr, x1, y1)
-	fmt.Fprintln(wtr, x2, y2)
-	fmt.Fprintln(wtr, x3, y3)
+	x, y := 0, 0
+	if x1 == x2 {
+		x = x3
+	} else if x1 == x3 {
+		x = x2
+	} else {
+		x = x1
+	}
+	if y1 == y2 {
+		y = y3
+	} else if y1 == y3 {
+		y = y2
+	} else {
+		y = y1
+	}
+	fmt.Fprintln(wtr, x, y)
 }
