@@ -3,21 +3,84 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
+	"math"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-	defer writer.Flush()
-	sc.Scan()
-	n, _ := strconv.Atoi(sc.Text())
-	for i := 0; i < n; i++ {
-		sc.Scan()
-		r := strings.Split(sc.Text(), " ")
-		fmt.Fprintln(writer, r[0], r[1])
+var sc = bufio.NewScanner(os.Stdin)
+var wtr = bufio.NewWriter(os.Stdout)
+
+func init() {
+	sc.Buffer([]byte{}, math.MaxInt64)
+	sc.Split(bufio.ScanWords)
+	if len(os.Args) > 1 && os.Args[1] == "i" {
+		b, e := ioutil.ReadFile("./input")
+		if e != nil {
+			panic(e)
+		}
+		sc = bufio.NewScanner(strings.NewReader(strings.Replace(string(b), " ", "\n", -1)))
 	}
-	fmt.Fprintln(writer, n)
+}
+func ni() int {
+	sc.Scan()
+	i, e := strconv.Atoi(sc.Text())
+	if e != nil {
+		panic(e)
+	}
+	return i
+}
+func nis(n int) []int {
+	a := make([]int, n)
+	for i := 0; i < n; i++ {
+		a[i] = ni()
+	}
+	return a
+}
+func ni2() (int, int) {
+	return ni(), ni()
+}
+func ni3() (int, int, int) {
+	return ni(), ni(), ni()
+}
+func ns() string {
+	sc.Scan()
+	return sc.Text()
+}
+func nf() float64 {
+	sc.Scan()
+	f, e := strconv.ParseFloat(sc.Text(), 64)
+	if e != nil {
+		panic(e)
+	}
+	return f
+}
+
+type data struct {
+	name string
+	age  int
+}
+
+func main() {
+	defer wtr.Flush()
+	n := ni()
+	sl := make([]data, n)
+	mmin := math.MaxInt64
+	start := 0
+	for i := 0; i < n; i++ {
+		sl[i].name = ns()
+		sl[i].age = ni()
+		if mmin > sl[i].age {
+			mmin = sl[i].age
+			start = i
+		}
+	}
+	for i := start; i < n; i++ {
+		fmt.Fprintln(wtr, sl[i].name)
+	}
+	for i := 0; i < start; i++ {
+		fmt.Fprintln(wtr, sl[i].name)
+	}
 }
