@@ -63,5 +63,10 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	s := ns()
-	fmt.Fprintln(wtr, s)
+	ad := make([]byte, 5)
+	ad[0] = 48
+	for i := 0; i < 4; i++ {
+		ad[i+1] = s[i]
+	}
+	fmt.Fprintln(wtr, string(ad[:4]))
 }
