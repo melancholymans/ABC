@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math"
-	"math/big"
 	"os"
 	"strconv"
 	"strings"
@@ -25,7 +24,6 @@ func init() {
 		sc = bufio.NewScanner(strings.NewReader(strings.Replace(string(b), " ", "\n", -1)))
 	}
 }
-
 func ni() int {
 	sc.Scan()
 	i, e := strconv.Atoi(sc.Text())
@@ -34,31 +32,54 @@ func ni() int {
 	}
 	return i
 }
-
-func nis(n int) []int64 {
-	a := make([]int64, n)
+func nis(n int) []int {
+	a := make([]int, n)
 	for i := 0; i < n; i++ {
-		a[i] = int64(ni())
+		a[i] = ni()
 	}
 	return a
 }
-
 func ni2() (int, int) {
 	return ni(), ni()
+}
+func ni3() (int, int, int) {
+	return ni(), ni(), ni()
+}
+func ni4() (int, int, int, int) {
+	return ni(), ni(), ni(), ni()
+}
+func ns() string {
+	sc.Scan()
+	return sc.Text()
+}
+func nf() float64 {
+	sc.Scan()
+	f, e := strconv.ParseFloat(sc.Text(), 64)
+	if e != nil {
+		panic(e)
+	}
+	return f
 }
 
 func main() {
 	defer wtr.Flush()
+	inf := 1000000000000000000
+	total := 1
 	n := ni()
-	ns := nis(n)
-	rmult := big.NewInt(1)
-	e08 := big.NewInt(1000000000000000000)
+	sl := nis(n)
 	for i := 0; i < n; i++ {
-		rmult.Mul(rmult, big.NewInt(int64(ns[i])))
+		if sl[i] == 0 {
+			fmt.Fprintln(wtr, 0)
+			return
+		}
 	}
-	if e08.Cmp(rmult) == -1 {
-		fmt.Fprintln(wtr, -1)
-	} else {
-		fmt.Fprintln(wtr, rmult)
+	for i := 0; i < n; i++ {
+		a := sl[i]
+		if inf/total < a {
+			fmt.Fprintln(wtr, -1)
+			return
+		}
+		total = total * a
 	}
+	fmt.Fprintln(wtr, total)
 }
