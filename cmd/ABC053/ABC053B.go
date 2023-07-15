@@ -3,33 +3,78 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
 	"math"
 	"os"
+	"strconv"
+	"strings"
 )
 
-func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-	defer writer.Flush()
-	sc.Scan()
-	s := sc.Text()
-	var count int
-	maxm := math.MinInt64
-	for i := 0; i < len(s); {
-		if s[i] == 65 {
-			count = 0
-			for j := i; j < len(s); j++ {
-				if s[j] == 90 && (j+1 == len(s) || s[j+1] != 90) {
-					break
-				}
-				count += 1
-			}
-			i += count
+var sc = bufio.NewScanner(os.Stdin)
+var wtr = bufio.NewWriter(os.Stdout)
+
+func init() {
+	sc.Buffer([]byte{}, math.MaxInt64)
+	sc.Split(bufio.ScanWords)
+	if len(os.Args) > 1 && os.Args[1] == "i" {
+		b, e := ioutil.ReadFile("./input")
+		if e != nil {
+			panic(e)
 		}
-		if count > maxm {
-			maxm = count
-		}
-		i += 1
+		sc = bufio.NewScanner(strings.NewReader(strings.Replace(string(b), " ", "\n", -1)))
 	}
-	fmt.Fprintln(writer, maxm+1)
+}
+func ni() int {
+	sc.Scan()
+	i, e := strconv.Atoi(sc.Text())
+	if e != nil {
+		panic(e)
+	}
+	return i
+}
+func nis(n int) []int {
+	a := make([]int, n)
+	for i := 0; i < n; i++ {
+		a[i] = ni()
+	}
+	return a
+}
+func ni2() (int, int) {
+	return ni(), ni()
+}
+func ni3() (int, int, int) {
+	return ni(), ni(), ni()
+}
+func ni4() (int, int, int, int) {
+	return ni(), ni(), ni(), ni()
+}
+func ns() string {
+	sc.Scan()
+	return sc.Text()
+}
+func nf() float64 {
+	sc.Scan()
+	f, e := strconv.ParseFloat(sc.Text(), 64)
+	if e != nil {
+		panic(e)
+	}
+	return f
+}
+
+func main() {
+	defer wtr.Flush()
+	s := ns()
+	start := 0
+	end := 0
+	flag := true
+	for i := 0; i < len(s); i++ {
+		if string(s[i]) == "A" && flag {
+			start = i
+			flag = false
+		}
+		if string(s[i]) == "Z" {
+			end = i
+		}
+	}
+	fmt.Fprintln(wtr, len(s[start:end+1]))
 }
