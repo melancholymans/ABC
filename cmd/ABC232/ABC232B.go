@@ -61,31 +61,23 @@ func nf() float64 {
 	return f
 }
 
-type FloatPair [2]float64
-
 func main() {
 	defer wtr.Flush()
-	n := ni()
-	sl := make([]FloatPair, n)
-	for i := 0; i < n; i++ {
-		sl[i][0] = nf()
-		sl[i][1] = nf()
-	}
-	mmax := 0.0
-	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-			if i == j {
-				continue
-			}
-			d := calc(sl[i][0], sl[j][0], sl[i][1], sl[j][1])
-			if mmax < d {
-				mmax = d
-			}
+	s := ns()
+	t := ns()
+	for k := 0; k < 26; k++ {
+		if conv(s, k) == t {
+			fmt.Fprintln(wtr, "Yes")
+			return
 		}
 	}
-	fmt.Fprintln(wtr, mmax)
+	fmt.Fprintln(wtr, "No")
 }
 
-func calc(x1, x2, y1, y2 float64) float64 {
-	return math.Sqrt(math.Pow(x2-x1, 2) + math.Pow(y2-y1, 2))
+func conv(s string, k int) string {
+	var b []byte
+	for i := 0; i < len(s); i++ {
+		b = append(b, (s[i]+byte(k)-97)%26+97)
+	}
+	return string(b)
 }
