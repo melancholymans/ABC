@@ -60,34 +60,37 @@ func nf() float64 {
 	}
 	return f
 }
+
+type IntPair [2]int
+
 func main() {
 	defer wtr.Flush()
-	n, m, _ := ni3() //t skip
-	sl := make([][2]int, m+1)
-	for i := 1; i < m+1; i++ {
-		a, b := ni2()
-		sl[i][0] = a
-		sl[i][1] = b
-	}
-	sl[0][0] = 0
-	sl[0][1] = sl[1][0]
-	//z := n - (sl[0][0] - 0)
-	///if z < 0 {
-	//	fmt.Fprintln(wtr, "No")
-	//	return
-	//}
-	z := n
+	n, m, t := ni3()
+	n = n * 2
+	mmax := n
+	tn := 0
 	for i := 0; i < m; i++ {
-		//coffeまでの放電処理
-		z -= sl[i][1] - sl[i][0]
-		//coffeでの充電処理
-		z += sl[i+1][1] - sl[i+1][0]
-		//ここで放電判定
-		if z < 0 {
+		a, b := ni2()
+		n -= (a - tn) * 2
+		if n <= 0 {
 			fmt.Fprintln(wtr, "No")
 			return
 		}
-		fmt.Fprintln(wtr, "i", i, "z=", z)
+		n += (b - a) * 2
+		n = Min(n, mmax)
+		tn = b
 	}
+	n -= (t - tn) * 2
+	if n <= 0 {
+		fmt.Fprintln(wtr, "No")
+		return
+	}
+	fmt.Fprintln(wtr, "Yes")
+}
 
+func Min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
