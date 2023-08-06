@@ -60,8 +60,29 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	n := ni()
+	sl := make([]string, n)
 	for i := 0; i < n; i++ {
-		s := ns()
-		fmt.Fprint(wtr, s)
+		sl[i] = ns()
 	}
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if i == j {
+				continue
+			}
+			if calc(sl[i] + sl[j]) {
+				fmt.Fprintln(wtr, "Yes")
+				return
+			}
+		}
+	}
+	fmt.Fprintln(wtr, "No")
+}
+
+func calc(s string) bool {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		if s[i] != s[j] {
+			return false
+		}
+	}
+	return true
 }
