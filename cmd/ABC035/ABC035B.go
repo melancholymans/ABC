@@ -81,9 +81,27 @@ func main() {
 			y -= 1
 		}
 	}
-	fmt.Fprintln(wtr, x, y)
-	if x < 0 {
+	z := Abs(x) + Abs(y)
 
+	if t == 1 {
+		fmt.Fprintln(wtr, z+count)
+	} else {
+		r := z - count
+		if r < 0 {
+			if Abs(r)%2 == 0 {
+				fmt.Fprintln(wtr, 0)
+			} else {
+				fmt.Fprintln(wtr, 1)
+			}
+		} else {
+			fmt.Fprintln(wtr, z-count)
+		}
 	}
-	fmt.Fprintln(wtr, count, t)
+}
+
+func Abs(a int) int {
+	if a > 0 {
+		return a
+	}
+	return -a
 }
