@@ -65,5 +65,30 @@ func main() {
 	defer wtr.Flush()
 	s := ns()
 	t := ns()
-	fmt.Fprintln(wtr, s, t)
+	l := len(s)
+	if s == t {
+		fmt.Fprintln(wtr, "Yes")
+		return
+	}
+	count := 0
+	for i := 0; i < l; {
+		if s[i] == t[i] {
+			i += 1
+			continue
+		}
+		if s[i] != t[i] {
+			if i+1 < l && s[i] == t[i+1] && s[i+1] == t[i] {
+				i += 2
+				count += 1
+			} else {
+				fmt.Fprintln(wtr, "No")
+				return
+			}
+		}
+	}
+	if count <= 1 {
+		fmt.Fprintln(wtr, "Yes")
+	} else {
+		fmt.Fprintln(wtr, "No")
+	}
 }
