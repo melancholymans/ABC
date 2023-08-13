@@ -65,6 +65,42 @@ func main() {
 	defer wtr.Flush()
 	n := ni()
 	sl := nis(n)
-	fmt.Fprintln(wtr, n)
-	fmt.Fprintln(wtr, sl)
+	l := len(sl)
+	total := sum(sl)
+	if total == 0 {
+		fmt.Fprintln(wtr, 0)
+		return
+	}
+	if total%l != 0 {
+		fmt.Fprintln(wtr, -1)
+		return
+	}
+	k := total / l
+	p := make([]int, n)
+	for i := 0; i < n; i++ {
+		p[i] = sl[i] - k
+	}
+	cum := make([]int, n+1)
+	cum[0] = 0
+	for i := 1; i <= n; i++ {
+		cum[i] = cum[i-1] + p[i-1]
+	}
+	cum = cum[1:]
+	gup, bge := 0, 0
+	for i := 0; i < n; i++ {
+		gup += 1
+		if cum[i] == 0 {
+			bge += gup - 1
+			gup = 0
+		}
+	}
+	fmt.Fprintln(wtr, bge)
+}
+
+func sum(sl []int) int {
+	total := 0
+	for i := 0; i < len(sl); i++ {
+		total += sl[i]
+	}
+	return total
 }
