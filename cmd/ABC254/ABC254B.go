@@ -71,16 +71,13 @@ func main() {
 		for j := 0; j < i+1; j++ {
 			if j == 0 {
 				sl[i][j] = 1
-				fmt.Println("j==0", i, j, sl[i][j])
 				continue
 			}
 			if i == j {
 				sl[i][j] = 1
-				fmt.Println("i==j", i, j, sl[i][j])
 				continue
 			}
 			sl[i][j] = sl[i-1][j-1] + sl[i-1][j]
-			fmt.Println(i, j, sl[i][j])
 		}
 	}
 	for i := 0; i < n; i++ {
