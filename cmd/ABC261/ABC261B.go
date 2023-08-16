@@ -70,11 +70,19 @@ func main() {
 	for i := 0; i < n; i++ {
 		sl[i] = strings.Split(ns(), "")
 	}
+	oft := 1
 	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-			fmt.Fprint(wtr, sl[i][j], " ")
+		for j := oft; j < n; j++ {
+			if sl[j][i] == "D" && sl[i][j] == "D" {
+				continue
+			}
+			if (sl[j][i] == "W" && sl[i][j] == "L") || (sl[j][i] == "L" && sl[i][j] == "W") {
+				continue
+			}
+			fmt.Fprint(wtr, "incorrect")
+			return
 		}
-		fmt.Fprintln(wtr, " ")
+		oft += 1
 	}
-	fmt.Fprintln(wtr, "correct")
+	fmt.Fprint(wtr, "correct")
 }
