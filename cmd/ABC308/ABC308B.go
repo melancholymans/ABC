@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io/ioutil"
 	"math"
 	"os"
@@ -68,17 +69,30 @@ type place struct {
 func main() {
 	defer wtr.Flush()
 	n, m := ni2()
-	color := make([]string, n)
+	c := make([]string, n)
 	for i := 0; i < n; i++ {
-		color[i] = ns()
+		c[i] = ns()
 	}
-	p := make([]place, m)
+	mp := map[string]int{}
+	d := make([]string, m)
 	for i := 0; i < m; i++ {
-		p[i].d = ns()
+		d[i] = ns()
+	}
+	p0 := ni()
+	p := make([]int, m)
+	for i := 0; i < m; i++ {
+		p[i] = ni()
 	}
 	for i := 0; i < m; i++ {
-		p[i].p = ni()
+		mp[d[i]] = p[i]
 	}
-	//fmt.Fprintln(wtr, color)
-	//fmt.Fprintln(wtr, p)
+	count := 0
+	for i := 0; i < n; i++ {
+		if v, ok := mp[c[i]]; ok {
+			count += v
+		} else {
+			count += p0
+		}
+	}
+	fmt.Fprintln(wtr, count)
 }
