@@ -68,10 +68,31 @@ func main() {
 	for i := 0; i < n; i++ {
 		sl[i] = strings.Split(ns(), "")
 	}
+	l := 1
+	line := make([]string, n*4+1 /*-4*/)
+	line[0] = "*"
 	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-			fmt.Fprint(wtr, sl[i][j], " ")
-		}
-		fmt.Fprintln(wtr, " ")
+		line[l] = sl[0][i]
+		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[0][i], " line[l]=", line[l])
+		l += 1
 	}
+	l -= 1
+	for i := 0; i < n; i++ {
+		line[l] = sl[i][n-1]
+		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[i][n-1], " line[l]=", line[l])
+		l += 1
+	}
+	l -= 1
+	for i := n - 1; i >= 0; i-- {
+		line[l] = sl[n-1][i]
+		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[n-1][i], " line[l]=", line[l])
+		l += 1
+	}
+	l -= 1
+	for i := n - 1; i >= 0; i-- {
+		line[l] = sl[i][0]
+		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[i][0], " line[l]=", line[l])
+		l += 1
+	}
+	fmt.Fprintln(wtr, line)
 }
