@@ -64,19 +64,16 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	s := strings.Split(ns(), "")
-	mp := map[string]bool{"a": true, "e": true, "i": true, "o": true, "u": true}
-	sl := make([]string, len(s))
-	for i, j := 0, 0; i < len(s); i++ {
-		for k, _ := range mp {
-			fmt.Fprintln(wtr, k, s[i])
-
-			if s[i] == k {
-				continue
+	kl := [5]string{"a", "e", "i", "o", "u"}
+	rl := make([]string, 0)
+outer:
+	for i := 0; i < len(s); i++ {
+		for j := 0; j < 5; j++ {
+			if s[i] == kl[j] {
+				continue outer
 			}
 		}
-		fmt.Fprintln(wtr, sl, s[i])
-		sl[j] = s[i]
-		j++
+		rl = append(rl, s[i])
 	}
-	fmt.Fprintln(wtr, sl)
+	fmt.Fprintln(wtr, strings.Join(rl, ""))
 }
