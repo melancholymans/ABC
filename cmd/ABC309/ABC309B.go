@@ -68,31 +68,34 @@ func main() {
 	for i := 0; i < n; i++ {
 		sl[i] = strings.Split(ns(), "")
 	}
-	l := 1
-	line := make([]string, n*4+1 /*-4*/)
-	line[0] = "*"
+	rl := make([][]string, n)
 	for i := 0; i < n; i++ {
-		line[l] = sl[0][i]
-		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[0][i], " line[l]=", line[l])
-		l += 1
+		rl[i] = make([]string, n)
 	}
-	l -= 1
 	for i := 0; i < n; i++ {
-		line[l] = sl[i][n-1]
-		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[i][n-1], " line[l]=", line[l])
-		l += 1
+		for j := 0; j < n; j++ {
+			if i == 0 || j == 0 || i == n-1 || j == n-1 {
+				if i == 0 && j < n-1 {
+					rl[i][j+1] = sl[i][j]
+				}
+				if i < n-1 && j == n-1 {
+					rl[i+1][j] = sl[i][j]
+				}
+				if i == n-1 && j > 0 {
+					rl[i][j-1] = sl[i][j]
+				}
+				if i > 0 && j == 0 {
+					rl[i-1][j] = sl[i][j]
+				}
+			} else {
+				rl[i][j] = sl[i][j]
+			}
+		}
 	}
-	l -= 1
-	for i := n - 1; i >= 0; i-- {
-		line[l] = sl[n-1][i]
-		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[n-1][i], " line[l]=", line[l])
-		l += 1
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			fmt.Fprint(wtr, rl[i][j])
+		}
+		fmt.Fprintln(wtr, " ")
 	}
-	l -= 1
-	for i := n - 1; i >= 0; i-- {
-		line[l] = sl[i][0]
-		//fmt.Fprintln(wtr, " l=", l, " i=", i, " sl[][]=", sl[i][0], " line[l]=", line[l])
-		l += 1
-	}
-	fmt.Fprintln(wtr, line)
 }
