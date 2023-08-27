@@ -63,22 +63,6 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
-	n, x := ni2()
-	x -= 1
-	sl := nis(n)
-	mp := map[int]bool{}
-	for i := 0; i < n; i++ {
-		mp[i] = false
-	}
-	mp[x] = true
-	count := 1
-	for {
-		x = sl[x] - 1
-		if mp[x] == true {
-			fmt.Fprintln(wtr, count)
-			return
-		}
-		mp[x] = true
-		count += 1
-	}
+	s := ns()
+	fmt.Fprintln(wtr, count)
 }
