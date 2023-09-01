@@ -61,8 +61,6 @@ func nf() float64 {
 	return f
 }
 
-type IntPair [2]int
-
 func main() {
 	defer wtr.Flush()
 	x, k := ni2()
