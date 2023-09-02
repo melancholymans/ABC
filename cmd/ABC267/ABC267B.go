@@ -64,8 +64,40 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	s := strings.Split(ns(), "")
+	si := [10]int{}
 	for i := 0; i < 10; i++ {
-		fmt.Fprintln(wtr, s[i])
+		si[i], _ = strconv.Atoi(s[i])
 	}
-	fmt.Fprintln(wtr, s)
+	p := [7]int{}
+	p[0] = si[6]
+	p[1] = si[3]
+	p[2] = si[1] + si[7]
+	p[3] = si[0] + si[4]
+	p[4] = si[2] + si[8]
+	p[5] = si[5]
+	p[6] = si[9]
+	if si[0] != 0 {
+		fmt.Fprintln(wtr, "No")
+		return
+	}
+	for i := 0; i < 7; i++ {
+		if p[i] != 0 {
+			if i+1 < 7 && p[i+1] == 0 {
+				if findnozero(i+2, p) {
+					fmt.Fprintln(wtr, "Yes")
+					return
+				}
+			}
+		}
+	}
+	fmt.Fprintln(wtr, "No")
+}
+
+func findnozero(idx int, p [7]int) bool {
+	for i := idx; i < 7; i++ {
+		if p[i] != 0 {
+			return true
+		}
+	}
+	return false
 }
