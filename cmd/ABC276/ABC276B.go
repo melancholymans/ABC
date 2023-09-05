@@ -61,15 +61,15 @@ func nf() float64 {
 	return f
 }
 
-type IntPair [2]int
+//type IntPair [2]int
 
 func main() {
 	defer wtr.Flush()
 	n, m := ni2()
-	sl := make([]IntPair, m)
+	sl := make(map[int][]int, 0)
 	for i := 0; i < m; i++ {
-		sl[i][0] = ni()
-		sl[i][1] = ni()
+		key := ni()
+		sl[key] = append(sl[key], ni())
 	}
 	fmt.Fprintln(wtr, n, m)
 	fmt.Fprintln(wtr, sl)
