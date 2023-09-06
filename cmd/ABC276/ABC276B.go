@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"math"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -68,9 +69,23 @@ func main() {
 	n, m := ni2()
 	sl := make(map[int][]int, 0)
 	for i := 0; i < m; i++ {
-		key := ni()
-		sl[key] = append(sl[key], ni())
+		k := ni()
+		v := ni()
+		sl[k] = append(sl[k], v)
+		sl[v] = append(sl[v], k)
 	}
-	fmt.Fprintln(wtr, n, m)
-	fmt.Fprintln(wtr, sl)
+	for i := 1; i <= n; i++ {
+		sort.Ints(sl[i])
+	}
+	for i := 1; i <= n; i++ {
+		if v, ok := sl[i]; ok {
+			fmt.Fprint(wtr, len(sl[i]), " ")
+			for j := 0; j < len(v); j++ {
+				fmt.Fprint(wtr, v[j], " ")
+			}
+			fmt.Fprintln(wtr, " ")
+		} else {
+			fmt.Fprintln(wtr, 0)
+		}
+	}
 }
