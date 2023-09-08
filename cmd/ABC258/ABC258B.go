@@ -63,11 +63,9 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
-	dfx:=[8]int{1,0,-1,0,1,1,-1,-1}
-	dfy:=[8]int{0,1,0,-1,1,-1,1,-1}
-	rst:=""
 	n := ni()
 	sl := make([][]int, n)
+	rst := 0
 	for i := 0; i < n; i++ {
 		sl[i] = make([]int, n)
 		for j, s := range strings.Split(ns(), "") {
@@ -75,47 +73,22 @@ func main() {
 			sl[i][j] = num
 		}
 	}
-	for lp := 0; lp < n; lp++ {
-		for v:=0;v<8;v++{
-			x:=lp
-			y:=0
-			if v==0 || v==2{
-				x,y=y,x
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			x := []int{1, 1, 0, -1, -1, -1, 0, 1}
+			y := []int{0, 1, 1, 1, 0, -1, -1, -1}
+			for k := 0; k < 8; k++ {
+				t := sl[i][j]
+				for l := 1; l <= n-1; l++ {
+					t *= 10
+					t += sl[(i+x[k]*l+n)%n][(j+y[k]*l+n)%n]
+				}
+				rst = Max(rst, t)
 			}
-			var string s
-			for i:=0;i<n;i++{
-				s+=strconv.Itoa(sl[x][y])
-				x+=dfx[v]
-				y+=dfy[v]
-				x=(x+n)%n
-				y=(y+n)%n
-			}
-			string t:=s+s
 		}
 	}
 	fmt.Fprintln(wtr, rst)
 }
-
-func area(n int, sl [][]int) (int, int, string) {
-	mmax := math.MinInt64
-	idh, idw := 0, 0
-	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-			if mmax < sl[i][j] {
-				mmax = sl[i][j]
-				idh = i
-				idw = j
-			}
-		}
-	}
-	return idh, idw, strconv.Itoa(mmax)
-}
-
-/*
-func oneNumber(){
-
-}
-*/
 
 func Max(a, b int) int {
 	if a > b {
