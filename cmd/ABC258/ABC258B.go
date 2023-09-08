@@ -72,6 +72,69 @@ func main() {
 			sl[i][j] = num
 		}
 	}
-	fmt.Fprintln(wtr, n)
-	fmt.Fprintln(wtr, sl)
+	//oneNumber()
+	idh, idw, rst := area(n, sl)
+	for lp := 0; lp < n-1; lp++ {
+		h, w := idh, idw
+		c := 0
+		mmax := math.MinInt64
+		if w-1 < 0 {
+			w = n - 1
+		} else {
+			w = w - 1
+		}
+		c = sl[h][w]
+		if mmax < c {
+			mmax = c
+			idw = w - 1
+		}
+		if w+1 > n-1 {
+			w = 0
+		}
+		c = sl[h][w+1]
+		if mmax < c {
+			mmax = c
+			idw = w + 1
+		}
+		c = sl[h-1][w]
+		if mmax < c {
+			mmax = c
+			idh = h - 1
+		}
+		c = sl[h+1][w]
+		if mmax < c {
+			mmax = c
+			idh = h + 1
+		}
+		rst += strconv.Itoa(mmax)
+	}
+	fmt.Fprintln(wtr, rst)
+}
+
+func area(n int, sl [][]int) (int, int, string) {
+	mmax := math.MinInt64
+	idh, idw := 0, 0
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if mmax < sl[i][j] {
+				mmax = sl[i][j]
+				idh = i
+				idw = j
+			}
+		}
+	}
+	return idh, idw, strconv.Itoa(mmax)
+}
+
+/*
+func oneNumber(){
+
+}
+*/
+
+func Max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
