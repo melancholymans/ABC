@@ -63,6 +63,9 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
+	dfx:=[8]int{1,0,-1,0,1,1,-1,-1}
+	dfy:=[8]int{0,1,0,-1,1,-1,1,-1}
+	rst:=""
 	n := ni()
 	sl := make([][]int, n)
 	for i := 0; i < n; i++ {
@@ -72,41 +75,23 @@ func main() {
 			sl[i][j] = num
 		}
 	}
-	//oneNumber()
-	idh, idw, rst := area(n, sl)
-	for lp := 0; lp < n-1; lp++ {
-		h, w := idh, idw
-		c := 0
-		mmax := math.MinInt64
-		if w-1 < 0 {
-			w = n - 1
-		} else {
-			w = w - 1
+	for lp := 0; lp < n; lp++ {
+		for v:=0;v<8;v++{
+			x:=lp
+			y:=0
+			if v==0 || v==2{
+				x,y=y,x
+			}
+			var string s
+			for i:=0;i<n;i++{
+				s+=strconv.Itoa(sl[x][y])
+				x+=dfx[v]
+				y+=dfy[v]
+				x=(x+n)%n
+				y=(y+n)%n
+			}
+			string t:=s+s
 		}
-		c = sl[h][w]
-		if mmax < c {
-			mmax = c
-			idw = w - 1
-		}
-		if w+1 > n-1 {
-			w = 0
-		}
-		c = sl[h][w+1]
-		if mmax < c {
-			mmax = c
-			idw = w + 1
-		}
-		c = sl[h-1][w]
-		if mmax < c {
-			mmax = c
-			idh = h - 1
-		}
-		c = sl[h+1][w]
-		if mmax < c {
-			mmax = c
-			idh = h + 1
-		}
-		rst += strconv.Itoa(mmax)
 	}
 	fmt.Fprintln(wtr, rst)
 }
