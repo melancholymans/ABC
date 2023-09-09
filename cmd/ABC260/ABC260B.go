@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"math"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -60,12 +61,64 @@ func nf() float64 {
 	}
 	return f
 }
+
+type IntPair [5]int
+
 func main() {
 	defer wtr.Flush()
 	n, x, y, z := ni4()
 	sa := nis(n)
 	sb := nis(n)
-	fmt.Fprintln(wtr, n, x, y, z)
-	fmt.Fprintln(wtr, sa)
-	fmt.Fprintln(wtr, sb)
+	sl := make([]IntPair, n)
+	for i := 0; i < n; i++ {
+		sl[i][0] = i + 1
+		sl[i][1] = sa[i]
+		sl[i][2] = sb[i]
+		sl[i][3] = sa[i] + sb[i]
+		sl[i][4] = 0
+	}
+	//数学
+	sort.Slice(sl, func(i, j int) bool {
+		if sl[i][1] == sl[j][1] {
+			return sl[i][0] < sl[j][0]
+		}
+		return sl[i][1] > sl[j][1]
+	})
+	for i := 0; i < x; i++ {
+		sl[i][4] = 1
+	}
+	//英語
+	sort.Slice(sl, func(i, j int) bool {
+		if sl[i][4] == sl[j][4] {
+			if sl[i][2] == sl[j][2] {
+				return sl[i][0] < sl[j][0]
+			}
+			return sl[i][2] > sl[j][2]
+		}
+		return sl[i][4] < sl[j][4]
+	})
+	for i := 0; i < y; i++ {
+		sl[i][4] = 1
+	}
+	//合計
+	sort.Slice(sl, func(i, j int) bool {
+		if sl[i][4] == sl[j][4] {
+			if sl[i][3] == sl[j][3] {
+				return sl[i][0] < sl[j][0]
+			}
+			return sl[i][3] > sl[j][3]
+		}
+		return sl[i][4] < sl[j][4]
+	})
+	for i := 0; i < z; i++ {
+		sl[i][4] = 1
+	}
+	sort.Slice(sl, func(i, j int) bool {
+		return sl[i][0] < sl[j][0]
+	})
+	for i := 0; i < len(sl); i++ {
+		if sl[i][4] == 1 {
+			fmt.Fprintln(wtr, sl[i][0])
+		}
+	}
 }
