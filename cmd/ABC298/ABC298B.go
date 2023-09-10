@@ -65,14 +65,81 @@ func main() {
 	defer wtr.Flush()
 	n := ni()
 	sa := make([][]int, n)
-	fmt.Fprintln(wtr, n)
 	for i := 0; i < n; i++ {
 		sa[i] = nis(n)
 	}
-	fmt.Fprintln(wtr, sa)
 	sb := make([][]int, n)
 	for i := 0; i < n; i++ {
 		sb[i] = nis(n)
 	}
-	fmt.Fprintln(wtr, sb)
+	//回転なし
+	if cmp(n, sb, sa) {
+		fmt.Fprintln(wtr, "Yes")
+		return
+	}
+	if cmp90(n, sb, sa) {
+		fmt.Fprintln(wtr, "Yes")
+		return
+	}
+	if cmp180(n, sb, sa) {
+		fmt.Fprintln(wtr, "Yes")
+		return
+	}
+	if cmp270(n, sb, sa) {
+		fmt.Fprintln(wtr, "Yes")
+		return
+	}
+	fmt.Fprintln(wtr, "No")
+}
+
+func cmp(n int, a, b [][]int) bool {
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if b[i][j] == 1 {
+				if a[i][j] != b[i][j] {
+					return false
+				}
+			}
+		}
+	}
+	return true
+}
+
+func cmp90(n int, a, b [][]int) bool {
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if b[n-1-j][i] == 1 {
+				if a[i][j] != b[n-1-j][i] {
+					return false
+				}
+			}
+		}
+	}
+	return true
+}
+
+func cmp180(n int, a, b [][]int) bool {
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if b[n-1-i][n-1-j] == 1 {
+				if a[i][j] != b[n-1-i][n-1-j] {
+					return false
+				}
+			}
+		}
+	}
+	return true
+}
+
+func cmp270(n int, a, b [][]int) bool {
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if b[j][n-1-i] == 1 {
+				if a[i][j] != b[j][n-1-i] {
+					return false
+				}
+			}
+		}
+	}
+	return true
 }
