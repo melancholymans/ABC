@@ -61,13 +61,32 @@ func nf() float64 {
 	return f
 }
 
+type IntPair [3]int
+
 func main() {
 	defer wtr.Flush()
 	n, m := ni2()
-	sl := make([][]int, m)
-	for i := 0; i < m; i++ {
-		sl[i] = nis(n)
+	sl := make([][]int, n)
+	for i := 0; i < n; i++ {
+		sl[i] = make([]int, n)
+		for j := 0; j < n; j++ {
+			sl[i][j] = 0
+		}
 	}
-	fmt.Fprintln(wtr, n, m)
-	fmt.Fprintln(wtr, sl)
+	for i := 0; i < m; i++ {
+		ns := nis(n)
+		for j := 0; j < n-1; j++ {
+			sl[ns[j]-1][ns[j+1]-1] = 1
+			sl[ns[j+1]-1][ns[j]-1] = 1
+		}
+	}
+	count := 0
+	for i := 0; i < n; i++ {
+		for j := i + 1; j < n; j++ {
+			if sl[i][j] == 0 {
+				count += 1
+			}
+		}
+	}
+	fmt.Fprintln(wtr, count)
 }
