@@ -64,11 +64,15 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	n := ni()
+	sl := map[string]bool{}
 	for i := 0; i < n; i++ {
 		l := ni()
+		s := make([]string, l)
 		for j := 0; j < l; j++ {
-			fmt.Fprint(wtr, ni(), " ")
+			s[j] = ns()
 		}
-		fmt.Fprintln(wtr, " ")
+		sl[strings.Join(s, " ")] = true
 	}
+	fmt.Fprintln(wtr, len(sl))
+
 }
