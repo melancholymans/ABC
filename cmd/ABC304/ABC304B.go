@@ -64,5 +64,19 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	n := ni()
-	fmt.Fprintln(wtr, n)
+	if n < 1000 {
+		fmt.Fprintln(wtr, n)
+	} else if 1000 <= n && n < 10000 {
+		fmt.Fprintln(wtr, n/10*10)
+	} else if 10000 <= n && n < 100000 {
+		fmt.Fprintln(wtr, n/100*100)
+	} else if 100000 <= n && n < 1000000 {
+		fmt.Fprintln(wtr, n/1000*1000)
+	} else if 1000000 <= n && n < 10000000 {
+		fmt.Fprintln(wtr, n/10000*10000)
+	} else if 10000000 <= n && n < 100000000 {
+		fmt.Fprintln(wtr, n/100000*100000)
+	} else if 100000000 <= n && n < 1000000000 {
+		fmt.Fprintln(wtr, n/1000000*1000000)
+	}
 }
