@@ -62,6 +62,9 @@ func nf() float64 {
 }
 func main() {
 	defer wtr.Flush()
-	sx, sy, gx, gy := ni4()
-	fmt.Fprintln(wtr, sx, sy, gx, gy)
+	sx := nf()
+	sy := nf()
+	gx := nf()
+	gy := nf()
+	fmt.Fprintln(wtr, sx+(gx-sx)*sy/(gy+sy))
 }
