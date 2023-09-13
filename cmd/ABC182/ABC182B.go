@@ -71,22 +71,23 @@ func main() {
 		}
 	}
 	count := make([]int, mmax+1)
-	for i := 2; i <= mmax; i++ {
-		fmt.Fprintln(wtr, "i=", i)
+	for k := 2; k <= mmax; k++ {
+		//fmt.Fprintln(wtr, "k=", k)
 		for j := 0; j < n; j++ {
-			if sl[j]%i == 0 {
-				count[i] += 1
-				fmt.Fprintf(wtr, "count[%d]=%d\n", i, count[i])
+			if sl[j]%k == 0 {
+				count[k] += 1
+				//fmt.Fprintf(wtr, "count[%d]=%d\n", k, count[k])
 			}
 
 		}
 	}
-	fmt.Fprintln(wtr, count)
-}
-
-func Max(a, b int) int {
-	if a > b {
-		return a
+	gcd := 0
+	mmax = math.MinInt64
+	for k := 2; k <= mmax; k++ {
+		if mmax < count[k] {
+			mmax = count[k]
+			gcd = k
+		}
 	}
-	return b
+	fmt.Fprintln(wtr, gcd)
 }
