@@ -72,20 +72,17 @@ func main() {
 	}
 	count := make([]int, mmax+1)
 	for k := 2; k <= mmax; k++ {
-		//fmt.Fprintln(wtr, "k=", k)
 		for j := 0; j < n; j++ {
 			if sl[j]%k == 0 {
 				count[k] += 1
-				//fmt.Fprintf(wtr, "count[%d]=%d\n", k, count[k])
 			}
-
 		}
 	}
 	gcd := 0
-	mmax = math.MinInt64
+	max := math.MinInt64
 	for k := 2; k <= mmax; k++ {
-		if mmax < count[k] {
-			mmax = count[k]
+		if max < count[k] {
+			max = count[k]
 			gcd = k
 		}
 	}
