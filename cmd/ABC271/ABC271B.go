@@ -76,7 +76,6 @@ func main() {
 		sq[i][0] = ni()
 		sq[i][1] = ni()
 	}
-	fmt.Fprintln(wtr, n, q)
-	fmt.Fprintln(wtr, sl)
-	fmt.Fprintln(wtr, sq)
+	fmt.Fprintln(wtr, sl[0][sq[0][1]-1])
+	fmt.Fprintln(wtr, sl[1][sq[1][1]-1])
 }
