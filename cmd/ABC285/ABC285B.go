@@ -63,8 +63,9 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
-	n := ni()
-	s := ns()
-	fmt.Fprintln(wtr, n)
-	fmt.Fprintln(wtr, s)
+	a, b := ni2()
+	for i := 0; i < b; i++ {
+		a = a * a
+	}
+	fmt.Fprintln(wtr, a)
 }
