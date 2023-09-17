@@ -3,29 +3,98 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
+	"math"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-	defer writer.Flush()
+var sc = bufio.NewScanner(os.Stdin)
+var wtr = bufio.NewWriter(os.Stdout)
 
+func init() {
+	sc.Buffer([]byte{}, math.MaxInt64)
+	sc.Split(bufio.ScanWords)
+	if len(os.Args) > 1 && os.Args[1] == "i" {
+		b, e := ioutil.ReadFile("./input")
+		if e != nil {
+			panic(e)
+		}
+		sc = bufio.NewScanner(strings.NewReader(strings.Replace(string(b), " ", "\n", -1)))
+	}
+}
+func ni() int {
 	sc.Scan()
-	r1 := strings.Split(sc.Text(), " ")
-	n, _ := strconv.Atoi(r1[0])
-	m, _ := strconv.Atoi(r1[1])
+	i, e := strconv.Atoi(sc.Text())
+	if e != nil {
+		panic(e)
+	}
+	return i
+}
+func nis(n int) []int {
+	a := make([]int, n)
+	for i := 0; i < n; i++ {
+		a[i] = ni()
+	}
+	return a
+}
+func ni2() (int, int) {
+	return ni(), ni()
+}
+func ni3() (int, int, int) {
+	return ni(), ni(), ni()
+}
+func ni4() (int, int, int, int) {
+	return ni(), ni(), ni(), ni()
+}
+func ns() string {
+	sc.Scan()
+	return sc.Text()
+}
+func nf() float64 {
+	sc.Scan()
+	f, e := strconv.ParseFloat(sc.Text(), 64)
+	if e != nil {
+		panic(e)
+	}
+	return f
+}
+
+func stois(s string, baseRune rune) []int {
+	r := make([]int, len(s))
+	for i, v := range s {
+		r[i] = int(v - baseRune)
+	}
+	return r
+}
+
+func main() {
+	defer wtr.Flush()
+	n, m := ni2()
+	nm := make([][]int, n)
+	mm := make([][]int, m)
+	for i := 0; i < n; i++ {
+		nm[i] = stois(ns(), 'a')
+	}
 	for i := 0; i < m; i++ {
-		sc.Scan()
-		r2 := strings.Split(sc.Text(), "")
-		fmt.Fprintln(writer, r2)
+		mm[i] = stois(ns(), 'a')
 	}
-	for j := 0; j < n; j++ {
-		sc.Scan()
-		r3 := strings.Split(sc.Text(), "")
-		fmt.Fprintln(writer, r3)
+	for i := 0; i < n-m+1; i++ {
+		for j := 0; j < n-m+1; j++ {
+			isSame := true
+			for k := 0; k < m; k++ {
+				for l := 0; l < m; l++ {
+					if mm[k][l] != nm[i+k][j+l] {
+						isSame = false
+					}
+				}
+			}
+			if isSame {
+				fmt.Fprintln(wtr, "Yes")
+				return
+			}
+		}
 	}
-	fmt.Fprintln(writer, n, m)
+	fmt.Fprintln(wtr, "No")
 }
