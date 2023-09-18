@@ -61,9 +61,15 @@ func nf() float64 {
 	return f
 }
 
+const mm int = 998244353
+
 func main() {
 	defer wtr.Flush()
 	a, b, c, d := ni4()
 	e, f := ni2()
-	fmt.Fprintln(wtr, a, b, c, d, e, f)
+	x := ((a % mm) * (b % mm)) % mm
+	x = (x * (c % mm)) % mm
+	y := ((d % mm) * (e % mm)) % mm
+	y = (y * (f % mm)) % mm
+	fmt.Fprintln(wtr, (x+mm-y)%mm)
 }
