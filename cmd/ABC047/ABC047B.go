@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io/ioutil"
 	"math"
 	"os"
@@ -74,43 +75,62 @@ func i2s(l, m int, def int) [][]int {
 }
 
 func main() {
-	defer flush()
-	//o := 0
+	defer wtr.Flush()
 	w, h, n := ni3()
-	sl := make([]IntTriple, n)
-	//mp := i2s(w, h, 1)
-	sm := make([][]int, w)
-
+	xs := make([]int, n)
+	ys := make([]int, n)
+	as := make([]int, n)
 	for i := 0; i < n; i++ {
-		for j := 0; j < w; j++ {
-			for k := 0; k < h; k++ {
-				switch as[i] {
-				case 1:
-					if j < xs[i] {
-						mp[j][k] = 0
-					}
-				case 2:
-					if j >= xs[i] {
-						mp[j][k] = 0
-					}
-				case 3:
-					if k < ys[i] {
-						mp[j][k] = 0
-					}
-				case 4:
-					if k >= ys[i] {
-						mp[j][k] = 0
-					}
-				}
+		xs[i] = ni()
+		ys[i] = ni()
+		as[i] = ni()
+	}
+	fmt.Fprintln(wtr, xs)
+	fmt.Fprintln(wtr, ys)
+	fmt.Fprintln(wtr, as)
+	mp := make([][]int, w)
+	for i := 0; i < w; i++ {
+		mp[i] = make([]int, h)
+		for j := 0; j < h; j++ {
+			mp[i][j] = 1
+		}
+	}
+	/*
+		//o := 0
+		sl := make([]IntTriple, n)
+		sm := make([][]int, w)
 
+		for i := 0; i < n; i++ {
+			for j := 0; j < w; j++ {
+				for k := 0; k < h; k++ {
+					switch as[i] {
+					case 1:
+						if j < xs[i] {
+							mp[j][k] = 0
+						}
+					case 2:
+						if j >= xs[i] {
+							mp[j][k] = 0
+						}
+					case 3:
+						if k < ys[i] {
+							mp[j][k] = 0
+						}
+					case 4:
+						if k >= ys[i] {
+							mp[j][k] = 0
+						}
+					}
+
+				}
 			}
 		}
-	}
-	for j := 0; j < w; j++ {
-		for k := 0; k < h; k++ {
-			o += mp[j][k]
+		for j := 0; j < w; j++ {
+			for k := 0; k < h; k++ {
+				o += mp[j][k]
+			}
 		}
-	}
 
-	out(o)
+		out(o)
+	*/
 }
