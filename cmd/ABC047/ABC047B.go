@@ -85,9 +85,6 @@ func main() {
 		ys[i] = ni()
 		as[i] = ni()
 	}
-	fmt.Fprintln(wtr, xs)
-	fmt.Fprintln(wtr, ys)
-	fmt.Fprintln(wtr, as)
 	mp := make([][]int, w)
 	for i := 0; i < w; i++ {
 		mp[i] = make([]int, h)
@@ -95,42 +92,36 @@ func main() {
 			mp[i][j] = 1
 		}
 	}
-	/*
-		//o := 0
-		sl := make([]IntTriple, n)
-		sm := make([][]int, w)
-
-		for i := 0; i < n; i++ {
-			for j := 0; j < w; j++ {
-				for k := 0; k < h; k++ {
-					switch as[i] {
-					case 1:
-						if j < xs[i] {
-							mp[j][k] = 0
-						}
-					case 2:
-						if j >= xs[i] {
-							mp[j][k] = 0
-						}
-					case 3:
-						if k < ys[i] {
-							mp[j][k] = 0
-						}
-					case 4:
-						if k >= ys[i] {
-							mp[j][k] = 0
-						}
-					}
-
-				}
-			}
-		}
+	for i := 0; i < n; i++ {
 		for j := 0; j < w; j++ {
 			for k := 0; k < h; k++ {
-				o += mp[j][k]
+				switch as[i] {
+				case 1:
+					if j < xs[i] {
+						mp[j][k] = 0
+					}
+				case 2:
+					if j >= xs[i] {
+						mp[j][k] = 0
+					}
+				case 3:
+					if k < ys[i] {
+						mp[j][k] = 0
+					}
+				case 4:
+					if k >= ys[i] {
+						mp[j][k] = 0
+					}
+				}
+
 			}
 		}
-
-		out(o)
-	*/
+	}
+	count := 0
+	for j := 0; j < w; j++ {
+		for k := 0; k < h; k++ {
+			count += mp[j][k]
+		}
+	}
+	fmt.Fprintln(wtr, count)
 }
