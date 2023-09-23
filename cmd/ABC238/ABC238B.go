@@ -83,26 +83,6 @@ func main() {
 	fmt.Fprintln(wtr, r)
 }
 
-/*
-	int main(){
-	  int p=0;
-	  for(int i=0;i<n;i++){
-	    int a;
-	    cin >> a;
-	    p+=a;p%=360;
-	    fl[p]=true;
-	  }
-	  int res=0,cur=0;
-	  for(int i=0;i<=360;i++){
-	    if(fl[i%360]){
-	      res=max(res,cur);
-	      cur=0;
-	    }
-	    cur++;
-	  }
-	  cout << res << '\n';
-	}
-*/
 func Max(a, b int) int {
 	if a > b {
 		return a
