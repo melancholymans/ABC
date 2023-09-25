@@ -3,60 +3,80 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
 	"math"
 	"os"
 	"strconv"
+	"strings"
 )
 
-func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-	defer writer.Flush()
-	sc.Scan()
-	r := sc.Text()
-	x, _ := strconv.Atoi(r)
-	for i := x; i >= 1; i-- {
-		if i == 1 {
-			fmt.Fprintln(writer, 1)
-		}
-		_, m := Divisor(i)
+var sc = bufio.NewScanner(os.Stdin)
+var wtr = bufio.NewWriter(os.Stdout)
 
-		if len(m) == 1 {
-			fmt.Fprintln(writer, i)
-			return
+func init() {
+	sc.Buffer([]byte{}, math.MaxInt64)
+	sc.Split(bufio.ScanWords)
+	if len(os.Args) > 1 && os.Args[1] == "i" {
+		b, e := ioutil.ReadFile("./input")
+		if e != nil {
+			panic(e)
 		}
+		sc = bufio.NewScanner(strings.NewReader(strings.Replace(string(b), " ", "\n", -1)))
 	}
 }
-
-func Divisor(n int) ([]int, map[int]int) {
-	sqrtn := int(math.Sqrt(float64(n)))
-	c := 2
-	divisor := []int{}
-	divisorm := make(map[int]int)
-	for {
-		if n%2 != 0 {
-			break
-		}
-		divisor = append(divisor, 2)
-		divisorm[2]++
-		n /= 2
+func ni() int {
+	sc.Scan()
+	i, e := strconv.Atoi(sc.Text())
+	if e != nil {
+		panic(e)
 	}
-	c = 3
-	for {
-		if n%c == 0 {
-			divisor = append(divisor, c)
-			divisorm[c]++
-			n /= c
-		} else {
-			c += 2
-			if c > sqrtn {
-				break
+	return i
+}
+func nis(n int) []int {
+	a := make([]int, n)
+	for i := 0; i < n; i++ {
+		a[i] = ni()
+	}
+	return a
+}
+func ni2() (int, int) {
+	return ni(), ni()
+}
+func ni3() (int, int, int) {
+	return ni(), ni(), ni()
+}
+func ns() string {
+	sc.Scan()
+	return sc.Text()
+}
+
+func nf() float64 {
+	sc.Scan()
+	f, e := strconv.ParseFloat(sc.Text(), 64)
+	if e != nil {
+		panic(e)
+	}
+	return f
+}
+
+func main() {
+	defer wtr.Flush()
+	x := ni()
+	rst := 1
+	for i := 2; i <= 100; i++ {
+		for j := 2; j <= 10; j++ {
+			t := int(math.Pow(float64(i), float64(j)))
+			if t <= x {
+				rst = max(rst, t)
 			}
 		}
 	}
-	if n != 1 {
-		divisor = append(divisor, n)
-		divisorm[n]++
+	fmt.Fprintln(wtr, rst)
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
 	}
-	return divisor, divisorm
+	return b
 }
