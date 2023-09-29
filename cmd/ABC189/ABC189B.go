@@ -59,12 +59,13 @@ func nf() float64 {
 }
 func main() {
 	defer wtr.Flush()
-	n, x := ni2()
-	total := 0.0
+	n := ni()
+	x := ni() * 100
+	total := 0
 	for i := 0; i < n; i++ {
 		v, p := ni2()
-		total += float64(v) * float64(p) / 100.0
-		if total > float64(x) {
+		total += v * p
+		if total > x {
 			fmt.Fprintln(wtr, i+1)
 			return
 		}
