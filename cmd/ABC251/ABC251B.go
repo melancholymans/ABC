@@ -65,6 +65,30 @@ func main() {
 	defer wtr.Flush()
 	n, w := ni2()
 	sl := nis(n)
-	fmt.Fprintln(wtr, n, w)
-	fmt.Fprintln(wtr, sl)
+	mp := make(map[int]bool)
+	for i := 0; i < n; i++ {
+		if sl[i] > w {
+			continue
+		}
+		mp[sl[i]] = true
+	}
+	for i := 0; i < n-1; i++ {
+		for j := i + 1; j < n; j++ {
+			if sl[i]+sl[j] > w {
+				continue
+			}
+			mp[sl[i]+sl[j]] = true
+		}
+	}
+	for i := 0; i < n-2; i++ {
+		for j := i + 1; j < n-1; j++ {
+			for k := j + 1; k < n; k++ {
+				if sl[i]+sl[j]+sl[k] > w {
+					continue
+				}
+				mp[sl[i]+sl[j]+sl[k]] = true
+			}
+		}
+	}
+	fmt.Fprintln(wtr, len(mp))
 }
