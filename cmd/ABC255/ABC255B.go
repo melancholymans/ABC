@@ -61,14 +61,33 @@ func nf() float64 {
 	return f
 }
 
+type IntPair [2]int
+
+func pow(a int) int {
+	return a * a
+}
+
 func main() {
 	defer wtr.Flush()
 	n, k := ni2()
 	sa := nis(k)
-	fmt.Fprintln(wtr, n, k)
-	fmt.Fprintln(wtr, sa)
+	sl := make([]IntPair, n)
 	for i := 0; i < n; i++ {
-		x, y := ni2()
-		fmt.Fprintln(wtr, x, y)
+		sl[i][0] = ni()
+		sl[i][1] = ni()
 	}
+	rst := 0
+	for i := 0; i < n; i++ {
+		mmin := math.MaxInt64
+		for j := 0; j < k; j++ {
+			c := pow(sl[i][0]-sl[sa[j]-1][0]) + pow(sl[i][1]-sl[sa[j]-1][1])
+			if mmin > c {
+				mmin = c
+			}
+		}
+		if rst < mmin {
+			rst = mmin
+		}
+	}
+	fmt.Fprintln(wtr, math.Sqrt(float64(rst)))
 }
