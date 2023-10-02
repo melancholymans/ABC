@@ -67,10 +67,19 @@ func main() {
 	defer wtr.Flush()
 	n, m := ni2()
 	sl := make([]IntPair, m)
+
 	for i := 0; i < m; i++ {
 		sl[i][0] = ni()
 		sl[i][1] = ni()
 	}
+	mp := make([][]bool, m)
+	for i := 0; i < n; i++ {
+		mp[i] = make([]bool, m)
+		for j := 0; j < 1; j++ {
+			mp[i][j] = true
+		}
+	}
 	fmt.Fprintln(wtr, n, m)
 	fmt.Fprintln(wtr, sl)
+	fmt.Fprintln(wtr, mp)
 }
