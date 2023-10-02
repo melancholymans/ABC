@@ -52,6 +52,7 @@ func ns() string {
 	sc.Scan()
 	return sc.Text()
 }
+
 func nf() float64 {
 	sc.Scan()
 	f, e := strconv.ParseFloat(sc.Text(), 64)
@@ -60,8 +61,15 @@ func nf() float64 {
 	}
 	return f
 }
+
 func main() {
 	defer wtr.Flush()
-	a, b, d := ni3()
-	fmt.Fprintln(wtr, a, b, d)
+	a := nf()
+	b := nf()
+	d := nf()
+	r := math.Atan2(b, a) * 180 / math.Pi
+	t := r + d
+	x := math.Cos(t/180*math.Pi) * math.Sqrt(a*a+b*b)
+	y := math.Sin(t/180*math.Pi) * math.Sqrt(a*a+b*b)
+	fmt.Fprintln(wtr, x, y)
 }
