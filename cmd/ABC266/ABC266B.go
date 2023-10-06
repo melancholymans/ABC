@@ -64,5 +64,10 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	n := ni()
-	fmt.Fprintln(wtr, n)
+	for x := 0; x < 998244353; x++ {
+		if (n-x)%998244353 == 0 {
+			fmt.Fprintln(wtr, x)
+			return
+		}
+	}
 }
