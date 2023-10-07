@@ -64,5 +64,23 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	x, y, z := ni3()
-	fmt.Fprintln(wtr, x, y, z)
+	rst := 0
+	if abs(x) < abs(y) || x*y < 0 {
+		rst = abs(x)
+	} else {
+		if abs(y) < abs(z) && z*y > 0 {
+			rst = -1
+		} else {
+			rst = abs(z)
+			rst += abs(z - x)
+		}
+	}
+	fmt.Fprintln(wtr, rst)
+}
+
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
 }
