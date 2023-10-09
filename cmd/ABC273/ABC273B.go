@@ -63,6 +63,34 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
-	x, k := ni2()
-	fmt.Fprintln(wtr, x, k)
+	rst := 0
+	tx := s2i(ns())
+	k := ni()
+	x := make([]int, 18)
+	ti := 0
+	for i := len(tx) - 1; i >= 0; i-- {
+		x[ti] = tx[i]
+		ti += 1
+	}
+	for i := 0; i < k; i++ {
+		if x[i] >= 5 {
+			x[i+1] += 1
+		}
+		x[i] = 0
+	}
+	t := 1
+	for i := 0; i < 18; i++ {
+		rst += x[i] * t
+		t *= 10
+	}
+	fmt.Fprintln(wtr, rst)
+}
+
+func s2i(s string) []int {
+	sl := make([]int, len(s))
+	kl := []byte(s)
+	for i := 0; i < len(s); i++ {
+		sl[i] = int(kl[i] - 48)
+	}
+	return sl
 }
