@@ -64,5 +64,29 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	h, m := ni2()
-	fmt.Fprintln(wtr, h, m)
+	h1 := h / 10
+	h2 := h % 10
+	m1 := m / 10
+	m2 := m % 10
+	fmt.Fprintf(wtr, "%02d %02d", h1*10+h2, m1*10+m2)
+	h = 0
+	m = 0
+	/*
+		for i := 0; i < 60*24+12; i++ {
+			h, m = timeCalc(h, m)
+			fmt.Fprintln(wtr, h, m)
+		}
+	*/
+}
+
+func timeCalc(h, m int) (int, int) {
+	m = m + 1
+	if m/60 == 1 {
+		m = 0
+		h += 1
+	}
+	if h/24 == 1 {
+		h = 0
+	}
+	return h, m
 }
