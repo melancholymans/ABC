@@ -64,19 +64,31 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	h, m := ni2()
-	h1 := h / 10
-	h2 := h % 10
-	m1 := m / 10
-	m2 := m % 10
-	fmt.Fprintf(wtr, "%02d %02d", h1*10+h2, m1*10+m2)
-	h = 0
-	m = 0
-	/*
-		for i := 0; i < 60*24+12; i++ {
-			h, m = timeCalc(h, m)
-			fmt.Fprintln(wtr, h, m)
+	for {
+		h1 := h / 10
+		h2 := h % 10
+		m1 := m / 10
+		m2 := m % 10
+		if isMistake(h1, h2, m1) {
+			fmt.Fprintf(wtr, "%02d %02d", h1*10+h2, m1*10+m2)
+			return
 		}
-	*/
+		h, m = timeCalc(h1*10+h2, m1*10+m2)
+	}
+}
+
+func isMistake(h1, h2, m1 int) bool {
+	//見間違えやすい表示ならtrueを返す
+	if h1 == 2 {
+		if m1 >= 0 && m1 <= 3 && (h2 >= 0 && h2 <= 5) {
+			return true
+		}
+	} else {
+		if (m1 >= 0 && m1 <= 9) && (h2 >= 0 && h2 <= 5) {
+			return true
+		}
+	}
+	return false
 }
 
 func timeCalc(h, m int) (int, int) {
