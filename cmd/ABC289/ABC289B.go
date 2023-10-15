@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"math"
 	"os"
 	"strconv"
@@ -17,7 +16,7 @@ func init() {
 	sc.Buffer([]byte{}, math.MaxInt64)
 	sc.Split(bufio.ScanWords)
 	if len(os.Args) > 1 && os.Args[1] == "i" {
-		b, e := ioutil.ReadFile("./input")
+		b, e := os.ReadFile("./input")
 		if e != nil {
 			panic(e)
 		}
@@ -65,6 +64,41 @@ func main() {
 	defer wtr.Flush()
 	n, m := ni2()
 	sl := nis(m)
-	fmt.Fprintln(wtr, n, m)
-	fmt.Fprintln(wtr, sl)
+	mp := make(map[int]bool)
+	for _, v := range sl {
+		mp[v] = true
+	}
+	st := 0
+	en := 0
+	r := make([]int, n)
+	for i := 0; i < n; i++ {
+		r[i] = i + 1
+	}
+	for i := 1; i <= n; i++ {
+		if st == 0 && mp[i] {
+			st = i
+			en = i + 1
+			continue
+		} else if mp[i] {
+			if en == i {
+				en++
+				continue
+			}
+		}
+		if st == 0 {
+			continue
+		}
+		t := en
+		for j := st; j <= en; j++ {
+			r[j-1] = t
+			t--
+		}
+		st = 0
+		en = 0
+	}
+	sj := make([]string, 0)
+	for i := 0; i < len(r); i++ {
+		sj = append(sj, strconv.Itoa(r[i]))
+	}
+	fmt.Fprintln(wtr, strings.Join(sj, " "))
 }
