@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"math"
 	"os"
 	"strconv"
@@ -17,7 +16,7 @@ func init() {
 	sc.Buffer([]byte{}, math.MaxInt64)
 	sc.Split(bufio.ScanWords)
 	if len(os.Args) > 1 && os.Args[1] == "i" {
-		b, e := ioutil.ReadFile("./input")
+		b, e := os.ReadFile("./input")
 		if e != nil {
 			panic(e)
 		}
@@ -63,9 +62,19 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
-	a, b := ni2()
-	for i := 0; i < b; i++ {
-		a = a * a
+	n := ni()
+	sl := []byte(ns())
+	for i := 1; i < n; i++ {
+		flag := true
+		for j := 0; j < n-i; j++ {
+			if sl[j] == sl[j+i] {
+				fmt.Fprintln(wtr, j)
+				flag = false
+				break
+			}
+		}
+		if flag {
+			fmt.Fprintln(wtr, n-i)
+		}
 	}
-	fmt.Fprintln(wtr, a)
 }
