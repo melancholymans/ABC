@@ -65,9 +65,39 @@ func main() {
 	defer wtr.Flush()
 	r, c := ni2()
 	sl := make([][]string, r)
-	fmt.Fprintln(wtr, r, c)
+	slc := make([][]string, r)
 	for i := 0; i < r; i++ {
 		sl[i] = strings.Split(ns(), "")
+		slc[i] = make([]string, c)
+		for j := 0; j < c; j++ {
+			slc[i][j] = sl[i][j]
+		}
 	}
-	fmt.Fprintln(wtr, sl)
+	for x := 0; x < r; x++ {
+		for y := 0; y < c; y++ {
+			d, _ := strconv.Atoi(sl[x][y])
+			if d > 0 {
+				for i := 0; i < r; i++ {
+					for j := 0; j < c; j++ {
+						if abs(x-i)+abs(y-j) <= d {
+							slc[i][j] = "."
+						}
+					}
+				}
+			}
+		}
+	}
+	for x := 0; x < r; x++ {
+		for y := 0; y < c; y++ {
+			fmt.Fprint(wtr, slc[x][y])
+		}
+		fmt.Fprintln(wtr, " ")
+	}
+}
+
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
 }
