@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"math"
 	"os"
 	"strconv"
@@ -17,7 +16,7 @@ func init() {
 	sc.Buffer([]byte{}, math.MaxInt64)
 	sc.Split(bufio.ScanWords)
 	if len(os.Args) > 1 && os.Args[1] == "i" {
-		b, e := ioutil.ReadFile("./input")
+		b, e := os.ReadFile("./input")
 		if e != nil {
 			panic(e)
 		}
@@ -64,15 +63,29 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	h, w := ni2()
-	sa := make([][]string, h)
-	fmt.Fprintln(wtr, h, w)
+	sla := make([][]byte, h)
+	slb := make([][]byte, h)
 	for i := 0; i < h; i++ {
-		sa[i] = strings.Split(ns(), "")
+		sla[i] = []byte(ns())
 	}
-	fmt.Fprintln(wtr, sa)
-	sb := make([][]string, h)
 	for i := 0; i < h; i++ {
-		sb[i] = strings.Split(ns(), "")
+		slb[i] = []byte(ns())
 	}
-	fmt.Fprintln(wtr, sb)
+	for i1 := 0; i1 < h; i1++ {
+		for j1 := 0; j1 < w; j1++ {
+			isv := true
+			for i2 := 0; i2 < h; i2++ {
+				for j2 := 0; j2 < w; j2++ {
+					if sla[(i1+i2)%h][(j1+j2)%w] != slb[i2][j2] {
+						isv = false
+					}
+				}
+			}
+			if isv {
+				fmt.Fprintln(wtr, "Yes")
+				return
+			}
+		}
+	}
+	fmt.Fprintln(wtr, "No")
 }
