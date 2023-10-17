@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"math"
 	"os"
 	"strconv"
@@ -17,7 +16,7 @@ func init() {
 	sc.Buffer([]byte{}, math.MaxInt64)
 	sc.Split(bufio.ScanWords)
 	if len(os.Args) > 1 && os.Args[1] == "i" {
-		b, e := ioutil.ReadFile("./input")
+		b, e := os.ReadFile("./input")
 		if e != nil {
 			panic(e)
 		}
@@ -61,6 +60,15 @@ func nf() float64 {
 	return f
 }
 
+type point struct {
+	x int
+	y int
+}
+
+func (p point) isvalid(x, y int) bool {
+	return (0 <= p.x && p.x < x) && (0 <= p.y && p.y < y)
+}
+
 func main() {
 	defer wtr.Flush()
 	h, w := ni2()
@@ -68,6 +76,26 @@ func main() {
 	for i := 0; i < h; i++ {
 		sl[i] = strings.Split(ns(), "")
 	}
-	fmt.Fprintln(wtr, h, w)
-	fmt.Fprintln(wtr, sl)
+	dx := [8]int{1, 1, 0, -1, -1, -1, 0, 1}
+	dy := [8]int{0, 1, 1, 1, 0, -1, -1, -1}
+	for i := 0; i < h; i++ {
+		for j := 0; j < w; j++ {
+			for k := 0; k < 8; k++ {
+				t := ""
+				for l := 0; l < 5; l++ {
+					pt := point{i + dx[k]*l, j + dy[k]*l}
+					if pt.isvalid(h, w) {
+						t += sl[pt.x][pt.y]
+					}
+				}
+				if t == "snuke" {
+					for l := 0; l < 5; l++ {
+						pt := point{i + dx[k]*l, j + dy[k]*l}
+						fmt.Fprintf(wtr, "%d %d\n", pt.x+1, pt.y+1)
+					}
+					return
+				}
+			}
+		}
+	}
 }
