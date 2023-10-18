@@ -66,17 +66,45 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	n, m := ni2()
-	fmt.Fprintln(wtr, n, m)
 	sl := make([][]int, n)
 	for i := 0; i < n; i++ {
-		sl[i] = make([]int, 2)
-		sl[i][0] = ni()
-		sl[i][1] = ni()
-		for j := 0; j < sl[i][1]; j++ {
-			sl[i] = append(sl[i], ni())
+		sl[i] = make([]int, 1+m)
+		sl[i][0] = ni() //price
+		c := ni()
+		for j := 0; j < c; j++ {
+			f := ni()
+			sl[i][f] = 1
 		}
 	}
 	for i := 0; i < n; i++ {
-		fmt.Fprintln(wtr, sl[i])
+		for j := 0; j < n; j++ {
+			if i == j {
+				continue
+			}
+			if sl[i][0] < sl[j][0] {
+				continue
+			}
+			flag := true
+			total := 0
+			for k := 1; k <= m; k++ {
+				if sl[j][k] == 1 && sl[i][k] == 0 {
+					total += 1
+				}
+				if sl[i][k] == 1 && sl[j][k] == 0 {
+					flag = false
+				}
+			}
+			if !flag {
+				continue
+			}
+			if sl[i][0] > sl[j][0] {
+				fmt.Fprintln(wtr, "Yes")
+				return
+			} else if total > 0 {
+				fmt.Fprintln(wtr, "Yes")
+				return
+			}
+		}
 	}
+	fmt.Fprintln(wtr, "No")
 }
