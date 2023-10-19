@@ -65,13 +65,33 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
+	s := `###.?????
+###.?????
+###.?????
+....?????
+?????????
+?????....
+?????.###
+?????.###
+?????.###`
+	base := make([][]byte, 9)
+	for i := 0; i < 9; i++ {
+		base[i] = make([]byte, 9)
+		for j := 0; j < 9; j++ {
+			base[i][j] = s[j*9+i]
+		}
+	}
+	fmt.Fprintln(wtr, base)
+
 	n, m := ni2()
 	fmt.Fprintln(wtr, n, m)
-	sl := make([][]string, n)
+	sl := make([][]byte, n)
 	for i := 0; i < n; i++ {
-		sl[i] = strings.Split(ns(), "")
+		sl[i] = []byte(ns())
 	}
-	for i := 0; i < n; i++ {
-		fmt.Fprintln(wtr, sl[i])
-	}
+	/*
+		for i := 0; i < n; i++ {
+			fmt.Fprintln(wtr, sl[i])
+		}
+	*/
 }
