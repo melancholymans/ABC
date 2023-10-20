@@ -63,9 +63,8 @@ func nf() float64 {
 	return f
 }
 
-func main() {
-	defer wtr.Flush()
-	s := `###.?????
+/*
+###.?????
 ###.?????
 ###.?????
 ....?????
@@ -73,7 +72,14 @@ func main() {
 ?????....
 ?????.###
 ?????.###
-?????.###`
+?????.###
+*/
+/*
+? byte(63)
+*/
+func main() {
+	defer wtr.Flush()
+	s := `###.?????###.?????###.?????....???????????????????....?????.###?????.###?????.###`
 	base := make([][]byte, 9)
 	for i := 0; i < 9; i++ {
 		base[i] = make([]byte, 9)
@@ -81,17 +87,25 @@ func main() {
 			base[i][j] = s[j*9+i]
 		}
 	}
-	fmt.Fprintln(wtr, base)
-
 	n, m := ni2()
-	fmt.Fprintln(wtr, n, m)
 	sl := make([][]byte, n)
 	for i := 0; i < n; i++ {
 		sl[i] = []byte(ns())
 	}
-	/*
-		for i := 0; i < n; i++ {
-			fmt.Fprintln(wtr, sl[i])
+	for i := 0; i <= n-9; i++ {
+		for j := 0; j <= m-9; j++ {
+			flag := true
+			for k := 0; k < 9; k++ {
+				for l := 0; l < 9; l++ {
+					if base[k][l] == byte(63) || base[k][l] == sl[i+k][j+l] {
+					} else {
+						flag = false
+					}
+				}
+			}
+			if flag {
+				fmt.Fprintf(wtr, "%d %d\n", i+1, j+1)
+			}
 		}
-	*/
+	}
 }
