@@ -70,13 +70,32 @@ func main() {
 	n := ni()
 	sl := make([][]int, n)
 	for i := 0; i < n; i++ {
+		sl[i] = make([]int, 37+1)
+	}
+	for i := 0; i < n; i++ {
 		c := ni()
-		sl[i] = nis(c)
+		for j := 0; j < c; j++ {
+			sl[i][ni()] = 1
+		}
+		sl[i][37] = c
 	}
 	x := ni()
-	fmt.Fprintln(wtr, n)
+	k := 0
+	mmin := math.MaxInt64
 	for i := 0; i < n; i++ {
-		fmt.Fprintln(wtr, sl[i])
+		if sl[i][x] > 0 {
+			if mmin >= sl[i][37] {
+				mmin = sl[i][37]
+			}
+		}
 	}
-	fmt.Fprintln(wtr, x)
+	rst := ""
+	for i := 0; i < n; i++ {
+		if sl[i][x] > 0 && sl[i][37] == mmin {
+			k += 1
+			rst = rst + strconv.Itoa(i+1) + " "
+		}
+	}
+	fmt.Fprintln(wtr, k)
+	fmt.Fprintln(wtr, rst)
 }
