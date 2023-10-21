@@ -68,13 +68,23 @@ type IntPair [2]int
 func main() {
 	defer wtr.Flush()
 	n, m := ni2()
-	fmt.Fprintln(wtr, n, m)
 	sl := make([]IntPair, m)
 	for i := 0; i < m; i++ {
 		sl[i][0] = ni()
 		sl[i][1] = ni()
 	}
+	mp := make(map[int]bool)
 	for i := 0; i < m; i++ {
-		fmt.Fprintln(wtr, sl[i])
+		mp[sl[i][1]] = true
+	}
+	if len(mp) != n-1 {
+		fmt.Fprintln(wtr, -1)
+		return
+	}
+	for i := 1; i <= n; i++ {
+		if !mp[i] {
+			fmt.Fprintln(wtr, i)
+			return
+		}
 	}
 }
