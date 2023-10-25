@@ -64,18 +64,17 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
+	rst := 0
 	s := ns()
-	for i := 0; i < len(s)/2; i++ {
-		if calc(s[i:]) {
-			fmt.Fprintln(wtr, len(s[i:]))
-			return
-		}
-		if calc(s[:len(s)-1-i]) {
-			fmt.Fprintln(wtr, len(s[:len(s)-1-i]))
-			return
+	n := len(s)
+	for i := 0; i < n; i++ {
+		for j := i + 1; j <= n; j++ {
+			if calc(s[i:j]) {
+				rst = max(rst, j-i)
+			}
 		}
 	}
-	fmt.Fprintln(wtr, 1)
+	fmt.Fprintln(wtr, rst)
 }
 
 func calc(s string) bool {
@@ -85,4 +84,11 @@ func calc(s string) bool {
 		}
 	}
 	return true
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
