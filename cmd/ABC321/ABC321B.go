@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"math"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -65,6 +66,20 @@ func main() {
 	defer wtr.Flush()
 	n, x := ni2()
 	sa := nis(n - 1)
-	fmt.Fprintln(wtr, x)
-	fmt.Fprintln(wtr, sa)
+	for i := 0; i <= 100; i++ {
+		st := make([]int, n-1)
+		copy(st, sa)
+		st = append(st, i)
+		sort.Ints(st)
+		r := 0
+		for j := 0; j < len(st); j++ {
+			r += st[j]
+		}
+		r = r - st[0] - st[n-1]
+		if r >= x {
+			fmt.Fprintln(wtr, i)
+			return
+		}
+	}
+	fmt.Fprintln(wtr, -1)
 }
