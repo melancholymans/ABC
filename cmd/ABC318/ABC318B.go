@@ -65,14 +65,21 @@ func main() {
 	defer wtr.Flush()
 	n := ni()
 	mp := make(map[string]bool)
+	count := 0
 	for i := 0; i < n; i++ {
 		a, b, c, d := ni(), ni(), ni(), ni()
 		for i := a; i < b; i++ {
 			for j := c; j < d; j++ {
-				r := strconv.Itoa(i) + "-" + strconv.Itoa(j)
-				mp[r] = true
+				r := strconv.Itoa(i) + strconv.Itoa(j)
+				if _, ok := mp[r]; ok {
+					fmt.Fprintln(wtr, "i=", i, "j=", j, "ok= ", r)
+					count += 1
+				} else {
+					mp[r] = true
+				}
 			}
 		}
 	}
+	fmt.Fprintln(wtr, count)
 	fmt.Fprintln(wtr, len(mp))
 }
