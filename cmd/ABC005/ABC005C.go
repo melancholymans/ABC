@@ -67,18 +67,33 @@ func main() {
 	sa := nis(n)
 	m := ni()
 	sb := nis(m)
-	if m < n {
+	if n < m {
 		fmt.Fprintln(wtr, "no")
-	}
-	if n == m {
-		for i := 0; i < n; i++ {
-			if sb[i]-sa[i] > t || sb[i]-sa[i] < 0 {
-				fmt.Fprintln(wtr, "no")
-				return
-			}
-		}
-		fmt.Fprintln(wtr, "yes")
 		return
 	}
-	fmt.Fprintln(wtr, "no")
+	flag := true
+	idx := 0
+	for i := 0; i < m; i++ {
+		if idx == n {
+			flag = false
+			break
+		}
+		for {
+			if idx == n {
+				flag = false
+				break
+			}
+			if sa[idx] <= sb[i] && sb[i] <= sa[idx]+t {
+				idx += 1
+				break
+			} else {
+				idx += 1
+			}
+		}
+	}
+	if flag {
+		fmt.Fprintln(wtr, "yes")
+	} else {
+		fmt.Fprintln(wtr, "no")
+	}
 }
