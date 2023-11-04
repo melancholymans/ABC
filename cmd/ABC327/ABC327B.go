@@ -64,15 +64,17 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	b := ni()
-	a := 2
-	for {
-		if b%a == 0 && b%(a*a) == 0 && b%(a*a*a) == 0 {
-			fmt.Fprintln(wtr, a)
-			return
+	for i := 1; i < 19; i++ {
+		t := 1
+		for j := 0; j < i; j++ {
+			t *= i
+			if t > b {
+				break
+			}
 		}
-		a += 1
-		if a > 100000000 {
-			break
+		if t == b {
+			fmt.Fprintln(wtr, i)
+			return
 		}
 	}
 	fmt.Fprintln(wtr, -1)
