@@ -64,18 +64,20 @@ func nf() float64 {
 func main() {
 	defer wtr.Flush()
 	b := ni()
-	for i := 1; i < 19; i++ {
-		t := 1
-		for j := 0; j < i; j++ {
-			t *= i
-			if t > b {
-				break
-			}
-		}
+	for i := 1; i < 16; i++ {
+		t := pown(i, i)
 		if t == b {
 			fmt.Fprintln(wtr, i)
 			return
 		}
 	}
 	fmt.Fprintln(wtr, -1)
+}
+
+func pown(a, n int) int {
+	total := 1
+	for i := 0; i < n; i++ {
+		total *= a
+	}
+	return total
 }
