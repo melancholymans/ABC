@@ -65,6 +65,15 @@ func main() {
 	defer wtr.Flush()
 	n := ni()
 	sl := nis(n)
-	fmt.Fprintln(wtr, n)
-	fmt.Fprintln(wtr, sl)
+	rst := 0.0
+	for i := 0; i < n; i++ {
+		t := 0
+		for j := 0; j < n; j++ {
+			if sl[i]%sl[j] == 0 {
+				t += 1
+			}
+		}
+		rst += float64(t-t/2) / float64(t)
+	}
+	fmt.Fprintln(wtr, rst)
 }
