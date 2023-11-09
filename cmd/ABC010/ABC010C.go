@@ -62,19 +62,29 @@ func nf() float64 {
 	return f
 }
 
-type IntPair [2]int
+type IntPair [2]float64
 
 func main() {
 	defer wtr.Flush()
-	txa, tya, txb, tyb := ni4()
-	t, v := ni2()
+	txa, tya, txb, tyb := nf(), nf(), nf(), nf()
+	t, v := nf(), nf()
 	n := ni()
 	sl := make([]IntPair, n)
 	for i := 0; i < n; i++ {
-		sl[i][0], sl[i][1] = ni(), ni()
+		sl[i][0], sl[i][1] = nf(), nf()
 	}
-	fmt.Fprintln(wtr, txa, tya, txb, tyb)
-	fmt.Fprintln(wtr, t, v)
-	fmt.Fprintln(wtr, n)
-	fmt.Fprintln(wtr, sl[0][0])
+	for i := 0; i < n; i++ {
+		total := 0.0
+		total += dis(txa, tya, sl[i][0], sl[i][1])
+		total += dis(sl[i][0], sl[i][1], txb, tyb)
+		if total/v <= t {
+			fmt.Fprintln(wtr, "YES")
+			return
+		}
+	}
+	fmt.Fprintln(wtr, "NO")
+}
+
+func dis(x1, y1, x2, y2 float64) float64 {
+	return math.Sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1))
 }
