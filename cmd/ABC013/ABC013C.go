@@ -62,11 +62,56 @@ func nf() float64 {
 	return f
 }
 
+func bs(ok, ng int, f func(int) bool) int {
+	if !f(ok) {
+		return -1
+	}
+	if f(ng) {
+		return ng
+	}
+	for abs(ok-ng) > 1 {
+		mid := (ok + ng) / 2
+
+		if f(mid) {
+			ok = mid
+		} else {
+			ng = mid
+		}
+	}
+	return ok
+}
+
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
+}
+
+func min(a, b int) int {
+	if a > b {
+		return b
+	}
+	return a
+}
+
 func main() {
 	defer wtr.Flush()
 	n, h := ni2()
 	a, b, c, d := ni4()
 	e := ni()
-	fmt.Fprintln(wtr, n, h)
-	fmt.Fprintln(wtr, a, b, c, d, e)
+	rst := math.MaxInt64
+	for i := 0; i <= n; i++ {
+		t := 0
+		th := h
+		t += i * a
+		th += i * b
+		ti := bs(0, n-i, func(tc int) bool {
+			return th+tc*d <= (n-i-tc)*e
+		})
+		ti += 1
+		t += ti * c
+		rst = min(rst, t)
+	}
+	fmt.Fprintln(wtr, rst)
 }
