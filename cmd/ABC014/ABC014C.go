@@ -100,10 +100,24 @@ type IntPair [2]int
 func main() {
 	defer wtr.Flush()
 	n := ni()
-	sl := make([]IntPair, n)
+	ml := make([]int, 1000000+10)
+	rst := 0
 	for i := 0; i < n; i++ {
-		sl[i][0], sl[i][1] = ni(), ni()
+		a, b := ni2()
+		ml[a] += 1
+		ml[b+1] -= 1
 	}
-	fmt.Fprintln(wtr, n)
-	fmt.Fprintln(wtr, sl)
+	c := 0
+	for _, v := range ml {
+		c += v
+		rst = max(rst, c)
+	}
+	fmt.Fprintln(wtr, rst)
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
