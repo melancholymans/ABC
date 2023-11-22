@@ -67,20 +67,14 @@ func main() {
 	n := ni()
 	sl := nis(n)
 	count := 0
-	fmt.Fprintln(wtr, "1123, 11%10", same(1123, 11%10))
-	fmt.Fprintln(wtr, "11111, 1%10", same(11111, 1%10))
-	fmt.Fprintln(wtr, "22222, 2%10", same(22222, 2%10))
-	fmt.Fprintln(wtr, "77777, 17%10", same(77777, 17%10))
-	fmt.Fprintln(wtr, "98765, 7%10", same(98765, 7%10))
-	fmt.Fprintln(wtr, "2234, 2%10", same(2234, 2%10))
-	for j := 1; j <= n; j++ {
-		m := j
+	for i := 1; i <= n; i++ {
+		m := i
 		if !same(m, m%10) {
 			continue
 		} else {
 			m = m % 10
 		}
-		for j := 1; j <= sl[m-1]; j++ {
+		for j := 1; j <= sl[i-1]; j++ {
 			if same(j, m) {
 				count += 1
 			}
