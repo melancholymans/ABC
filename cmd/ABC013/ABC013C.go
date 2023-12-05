@@ -111,6 +111,7 @@ func main() {
 		})
 		ti += 1
 		t += ti * c
+		fmt.Println("i=", i, "a=", a, "b=", b, "c=", c, "d=", d, ":", t, th, ti)
 		rst = min(rst, t)
 	}
 	fmt.Fprintln(wtr, rst)
