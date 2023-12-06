@@ -61,6 +61,36 @@ func nf() float64 {
 	return f
 }
 
+type bit struct {
+	n int
+	b []int
+}
+
+func newBit(n int) *bit {
+	return &bit{
+		n: n + 1,
+		b: make([]int, n+1),
+	}
+}
+
+func (b *bit) add(i, x int) {
+	for i++; i < b.n && i > 0; i += i & -i {
+		b.b[i] += x
+	}
+}
+
+func (b *bit) rangesum(l, r int) int {
+	return b.sum(r-1) - b.sum(l-1)
+}
+
+func (b *bit) sum(i int) int {
+	ret := 0
+	for i++; i > 0; i -= i & -i {
+		ret += b.b[i]
+	}
+	return ret
+}
+
 type taple [3]int
 
 func main() {
@@ -72,4 +102,30 @@ func main() {
 	}
 	fmt.Fprintln(wtr, n, m)
 	fmt.Fprintln(wtr, sl)
+}
+
+func main() {
+
+	defer flush()
+
+	o := 0
+	n, m := ni2()
+	lrs := make([][][2]int, m)
+	sum := 0
+	for i := 0; i < n; i++ {
+		l, r, s := ni3()
+		l--
+		r--
+		lrs[l] = append(lrs[l], [2]int{r, s})
+		sum += s
+	}
+	bit := newBit(m)
+	for i := 0; i < m; i++ {
+		for _, v := range lrs[i] {
+			bit.add(v[0], v[1])
+		}
+		maxs(&o, sum-bit.rangesum(i, m))
+	}
+
+	out(o)
 }
