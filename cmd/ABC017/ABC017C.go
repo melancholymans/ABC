@@ -79,7 +79,7 @@ func (b *bit) add(i, x int) {
 	}
 }
 
-func (b *bit) rangesum(l, r int) int {
+func (b *bit) rangeSum(l, r int) int {
 	return b.sum(r-1) - b.sum(l-1)
 }
 
@@ -91,41 +91,32 @@ func (b *bit) sum(i int) int {
 	return ret
 }
 
-type taple [3]int
-
 func main() {
 	defer wtr.Flush()
-	n, m := ni2()
-	sl := make([]taple, n)
-	for i := 0; i < n; i++ {
-		sl[i][0], sl[i][1], sl[i][2] = ni(), ni(), ni()
-	}
-	fmt.Fprintln(wtr, n, m)
-	fmt.Fprintln(wtr, sl)
-}
-
-func main() {
-
-	defer flush()
-
-	o := 0
 	n, m := ni2()
 	lrs := make([][][2]int, m)
 	sum := 0
 	for i := 0; i < n; i++ {
-		l, r, s := ni3()
-		l--
-		r--
+		l := ni() - 1
+		r := ni() - 1
+		s := ni()
 		lrs[l] = append(lrs[l], [2]int{r, s})
 		sum += s
 	}
+	rst := math.MinInt64
 	bit := newBit(m)
 	for i := 0; i < m; i++ {
 		for _, v := range lrs[i] {
 			bit.add(v[0], v[1])
 		}
-		maxs(&o, sum-bit.rangesum(i, m))
+		rst = max(rst, sum-bit.rangeSum(i, m))
 	}
+	fmt.Fprintln(wtr, rst)
+}
 
-	out(o)
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
