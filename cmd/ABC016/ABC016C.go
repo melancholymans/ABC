@@ -125,6 +125,7 @@ func newGraph(size int, edges [][]edge) *graph {
 	return graph
 }
 
+// ワーシャル–フロイド法のアルゴリズムで最短経路問題を解く
 func (g *graph) floydWarshall() ([][]int, bool) {
 	score := make([][]int, g.size)
 	for i := 0; i < g.size; i++ {
