@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"math"
 	"os"
-	"sort"
 	"strconv"
 	"strings"
 )
@@ -66,30 +65,17 @@ func main() {
 	defer wtr.Flush()
 	n := ni()
 	sl := nis(n)
-	Sorts(sl)
-	total := 0
+	mp := make(map[int]int)
 	for i := 0; i < n; i++ {
-		x := sl[i]
-		if x != 0 {
-			total += 1
-		} else if x == 0 {
-			continue
-		}
-		for j := i + 1; j < n; j++ {
-			if sl[j] == 0 {
-				continue
+		v := sl[i]
+		for {
+			if v%2 == 0 {
+				v /= 2
+			} else {
+				break
 			}
-			if sl[j]%(2*x) != 0 {
-				total += 1
-			}
-			sl[j] = 0
 		}
+		mp[v] = 1
 	}
-	fmt.Fprintln(wtr, total)
-}
-
-func Sorts(sl []int) {
-	sort.Slice(sl, func(i, j int) bool {
-		return sl[i] < sl[j]
-	})
+	fmt.Fprintln(wtr, len(mp))
 }
