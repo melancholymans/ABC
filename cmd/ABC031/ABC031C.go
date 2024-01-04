@@ -63,28 +63,56 @@ func nf() float64 {
 
 func main() {
 	defer wtr.Flush()
+	total := math.MinInt64
 	n := ni()
-	sl := nis(n)
-	mmax := math.MinInt64
-	for i := 0; i < n-1; i++ {
+	ns := nis(n)
+	for i := 0; i < n; i++ {
+		mc := math.MinInt64
+		mi := 0
+		t := 0
+		for j := 0; j < i; j++ {
+			t = 0
+			for k := j + 1; k <= i; k += 2 {
+				t += ns[k]
+			}
+			if t > mc {
+				mc = t
+				mi = j
+			}
+		}
+		t = 0
 		for j := i + 1; j < n; j++ {
-			taka := 0
-			aoki := 0
-			for k := i; k <= j; k += 2 {
-				taka += sl[k]
-				if k+1 <= j {
-					aoki += sl[k+1]
+			if (j-i)%2 == 0 {
+				continue
+			}
+			t += ns[j]
+			if t > mc {
+				mc = t
+				mi = j
+			}
+		}
+		t2 := 0
+		if mi < i {
+			for j := mi; j <= i; j++ {
+				if (j-mi)%2 == 0 {
+					t2 += ns[j]
 				}
 			}
-			mmax = max(mmax, taka)
+		} else {
+			for j := i; j <= mi; j++ {
+				if (j-i)%2 == 0 {
+					t2 += ns[j]
+				}
+			}
 		}
+		total = max(total, t2)
 	}
-	fmt.Fprintln(wtr, mmax)
+	fmt.Fprintln(wtr, total)
 }
 
 func max(a, b int) int {
-	if a < b {
-		return b
+	if a > b {
+		return a
 	}
-	return a
+	return b
 }
