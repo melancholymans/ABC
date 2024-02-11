@@ -66,7 +66,6 @@ func main() {
 		mp[s[i]] += 1
 	}
 	sl := make([]IntPair, n)
-	//[0] - key [1] - cont
 	i := 0
 	for k, v := range mp {
 		sl[i][0] = int(k)
