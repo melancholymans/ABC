@@ -74,7 +74,6 @@ func main() {
 	for i := 0; i < n; i++ {
 		fmt.Fprintln(wtr, sl[i][1])
 	}
-
 }
 
 func min(a, b int) int {
