@@ -57,12 +57,51 @@ func ns() string {
 
 func main() {
 	defer wtr.Flush()
-	s := []byte(ns())
+	s := ns()
 	k := ni()
-	sort.Slice(s, func(i, j int) bool { //関数を渡すことでソート順、比較対象を細かく選べる
-		return s[i] < s[j]
-	})
-	fmt.Fprintln(wtr, strings.Join([]string(s), ""))
+	is := make([]int, len(s))
+	for i := 0; i < len(s); i++ {
+		is[i] = i
+	}
+	sm := make(map[string]bool)
+	for {
+		t := ""
+		for i := 0; i < len(s); i++ {
+			t += string(s[is[i]])
+		}
+		sm[t] = true
+		if !nextPermutation(sort.IntSlice(is)) {
+			break
+		}
+	}
+	sts := []string{}
+	for t := range sm {
+		sts = append(sts, t)
+	}
+	sort.Strings(sts)
+	fmt.Fprintln(wtr, sts[k-1])
+}
 
-	fmt.Fprintln(wtr, k)
+func nextPermutation(x sort.Interface) bool {
+	n := x.Len() - 1
+	if n < 1 {
+		return false
+	}
+	j := n - 1
+	for ; !x.Less(j, j+1); j-- {
+		if j == 0 {
+			return false
+		}
+	}
+	l := n
+	for !x.Less(j, l) {
+		l--
+	}
+	x.Swap(j, l)
+	for k, l := j+1, n; k < l; {
+		x.Swap(k, l)
+		k++
+		l--
+	}
+	return true
 }
