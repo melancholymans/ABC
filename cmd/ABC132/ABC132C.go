@@ -10,67 +10,57 @@ import (
 	"strings"
 )
 
-func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-	defer writer.Flush()
+var sc = bufio.NewScanner(os.Stdin)
+var wtr = bufio.NewWriter(os.Stdout)
+
+func init() {
+	sc.Buffer([]byte{}, math.MaxInt64)
+	sc.Split(bufio.ScanWords)
+	if len(os.Args) > 1 && os.Args[1] == "i" {
+		b, e := os.ReadFile("./input")
+		if e != nil {
+			panic(e)
+		}
+		sc = bufio.NewScanner(strings.NewReader(strings.Replace(string(b), " ", "\n", -1)))
+	}
+}
+
+func ni() int {
 	sc.Scan()
-	r1 := sc.Text()
-	n, _ := strconv.Atoi(r1)
-	sc.Scan()
-	r2 := strings.Split(sc.Text(), " ")
-	sl := make([]int, 0)
-	max := math.MinInt64
+	i, e := strconv.Atoi(sc.Text())
+	if e != nil {
+		panic(e)
+	}
+	return i
+}
+
+func nis(n int) []int {
+	a := make([]int, n)
 	for i := 0; i < n; i++ {
-		a, _ := strconv.Atoi(r2[i])
-		sl = append(sl, a)
-		if a > max {
-			max = a
-		}
+		a[i] = ni()
 	}
-	sort.Ints(sl)
-	l := len(sl)
-	count := 0
-	for k := 1; k <= max; k++ {
-		idx := LowerBound(k, sl)
-		if idx+1 == l-idx-1 {
-			count += 1
-		}
-	}
-	fmt.Fprintln(writer, count)
+	return a
 }
 
-func LowerBound(v int, sl []int) int {
-	if len(sl) == 0 {
-		return -1
-	}
-	idx := bs(0, len(sl)-1, func(c int) bool {
-		return sl[c] < v
+func ni2() (int, int) {
+	return ni(), ni()
+}
+
+func ni3() (int, int, int) {
+	return ni(), ni(), ni()
+}
+
+func ns() string {
+	sc.Scan()
+	return sc.Text()
+}
+
+func main() {
+	defer wtr.Flush()
+	n := ni()
+	dl := nis(n)
+	sort.Slice(dl, func(i, j int) bool {
+		return dl[i] < dl[j]
 	})
-	return idx
-}
-
-func bs(low, hi int, f func(int) bool) int {
-	if !f(low) {
-		return -1
-	}
-	if f(hi) {
-		return hi
-	}
-	for Abs(low-hi) > 1 {
-		mid := (low + hi) / 2
-		if f(mid) {
-			low = mid
-		} else {
-			hi = mid
-		}
-	}
-	return low
-}
-
-func Abs(a int) int {
-	if a > 0 {
-		return a
-	}
-	return -a
+	fmt.Fprintln(wtr, dl[n/2]-dl[n/2-1])
 }
