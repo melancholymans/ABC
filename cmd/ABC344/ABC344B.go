@@ -51,21 +51,27 @@ func ni3() (int, int, int) {
 
 func ns() string {
 	sc.Scan()
-	if sc.Scan() == false {
-		return ""
-	}
 	return sc.Text()
 }
 
 func main() {
 	defer wtr.Flush()
+	sl := make([]int, 0)
 	for {
-		s := ns()
-		if s == "" {
+		a := ni()
+		sl = append(sl, a)
+		if a == 0 {
 			break
-			fmt.Println(wtr, "OKOKO")
 		}
-		fmt.Fprintln(wtr, s)
 	}
-	fmt.Fprintln(wtr, "END")
+	reverse(sl)
+	for i := 0; i < len(sl); i++ {
+		fmt.Fprintln(wtr, sl[i])
+	}
+}
+
+func reverse(sl []int) {
+	for i, j := 0, len(sl)-1; i < j; i, j = i+1, j-1 {
+		sl[i], sl[j] = sl[j], sl[i]
+	}
 }
