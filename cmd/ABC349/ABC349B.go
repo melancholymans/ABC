@@ -65,8 +65,8 @@ func main() {
 	for _, v := range mp {
 		pm[v] += 1
 	}
-	for i := 1; i <= 100; i++ {
-		if pm[i] != 2 && pm[i] != 0 {
+	for _, v := range pm {
+		if v != 2 && v != 0 {
 			fmt.Fprintln(wtr, "No")
 			return
 		}
