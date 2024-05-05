@@ -60,11 +60,7 @@ func main() {
 	al := nis(n)
 	mp := make(map[int][]int)
 	for i := 0; i < n; i++ {
-		if _, ok := mp[al[i]]; !ok {
-			mp[al[i]] = []int{i + 1}
-		} else {
-			mp[al[i]] = append(mp[al[i]], i+1)
-		}
+		mp[al[i]] = append(mp[al[i]], i+1)
 	}
 	for i := 0; i < q; i++ {
 		x := ni()
